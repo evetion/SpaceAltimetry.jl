@@ -1,7 +1,7 @@
 [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://evetion.github.io/SpaceAltimetry.jl/stable)
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://evetion.github.io/SpaceAltimetry.jl/dev)
 [![CI](https://github.com/evetion/SpaceAltimetry.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/evetion/SpaceAltimetry.jl/actions/workflows/CI.yml)
-[![codecov](https://codecov.io/gh/evetion/SpaceAltimetry.jl/branch/master/graph/badge.svg?token=nztwnGtIcY)](https://codecov.io/gh/evetion/SpaceAltimetry.jl)
+[![codecov](https://codecov.io/gh/evetion/SpaceAltimetry.jl/branch/main/graph/badge.svg?token=nztwnGtIcY)](https://codecov.io/gh/evetion/SpaceAltimetry.jl)
 [![DOI](https://zenodo.org/badge/241095197.svg)](https://zenodo.org/badge/latestdoi/241095197)
 [![Aqua QA](https://juliatesting.github.io/Aqua.jl/dev/assets/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 

@@ -109,7 +109,7 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
-edit_uri: edit/master/docs/
+edit_uri: edit/main/docs/
 repo_name: evetion/SpaceAltimetry.jl
 extra:
   version:
