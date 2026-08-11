@@ -2,12 +2,12 @@
 
 ```@autodocs
 Private = false
-Modules = [SpaceLiDAR]
+Modules = [SpaceAltimetry]
 Pages   = ["granule.jl", "ICESat/ICESat.jl", "ICESat-2/ICESat-2.jl", "GEDI/GEDI.jl"]
 ```
 
 ## Track Angles
 
 ```@docs
-SpaceLiDAR.track_angle
+SpaceAltimetry.track_angle
 ```

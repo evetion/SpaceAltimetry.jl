@@ -8,7 +8,7 @@ using REPL.TerminalMenus
 using REPL.TerminalMenus: ARROW_LEFT, ARROW_RIGHT
 using FoldingTrees: TreeMenu
 using DataAPI: metadata, colmetadata
-using SpaceLiDAR.H5Tables: H5Table, explore, get_dimensions, get_references,
+using SpaceAltimetry.H5Tables: H5Table, explore, get_dimensions, get_references,
     resolve_global_dims, is_dim_compatible, _h5read_attr,
     build_tree, resolve_children!, recompute_global!, update_compatibility!,
     ExplorerState, _set_selected!, _mark_groups!, expand_attrs!,
@@ -671,7 +671,7 @@ using SpaceLiDAR.H5Tables: H5Table, explore, get_dimensions, get_references,
 end
 
 @testset "GranuleSource + Operations" begin
-    using SpaceLiDAR.H5Tables: resolve_variable, source_metadata, h5handle
+    using SpaceAltimetry.H5Tables: resolve_variable, source_metadata, h5handle
 
     @testset "provenance via GranuleSource" begin
         g = SL.granule(GLAH14_fn)

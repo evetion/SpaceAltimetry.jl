@@ -157,7 +157,7 @@ function H5Table(
     # Design: H5Table is the generic table reader. When called from explore() or
     # directly with name=>path pairs, multi-dimensional datasets participate fully
     # in dimension resolution so their axes define the global row count (flattening).
-    # Schema-based constructors (SpaceLiDAR templates) bypass this by passing an
+    # Schema-based constructors (SpaceAltimetry templates) bypass this by passing an
     # explicit `nrow`, which skips dimension resolution entirely for speed.
     #
     # Transform-aware: each variable's raw axes are filtered through its

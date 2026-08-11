@@ -3,8 +3,8 @@
 Version 34 — [User Guide](https://nsidc.org/sites/nsidc.org/files/MULTI-GLAH01-V033-V034-UserGuide.pdf) · [ATBD](https://eospso.nasa.gov/sites/default/files/atbd/ATBD-GLAS-02.pdf)
 
 ```@setup glah14
-using SpaceLiDAR
-using SpaceLiDAR.H5Tables: ToDateTime, ToDateTimeConst, ToBool, InvertBool, SliceRow
+using SpaceAltimetry
+using SpaceAltimetry.H5Tables: ToDateTime, ToDateTimeConst, ToBool, InvertBool, SliceRow
 using Markdown
 
 function resolved_type(v)
@@ -38,7 +38,7 @@ atmospheric and surface characterization fields.
 ## Quick Start
 
 ```julia
-using SpaceLiDAR, DataFrames
+using SpaceAltimetry, DataFrames
 
 g = granule("GLAH14_634_1102_001_0071_0_01_0001.H5")
 t = table(g)
@@ -49,7 +49,7 @@ df = DataFrame(t)
 
 ```@example glah14
 g = dummy(ICESat_Granule{:GLAH14}) # hide
-vars_table(SpaceLiDAR.default_variables(g)) # hide
+vars_table(SpaceAltimetry.default_variables(g)) # hide
 ```
 
 ## Additional Fields

@@ -5,7 +5,7 @@
 For a single granule, `download!` fetches from the URL and stores locally:
 
 ```julia
-using SpaceLiDAR, Extents
+using SpaceAltimetry, Extents
 
 vietnam = Extent(X=(102.0, 107.0), Y=(8.0, 12.0))
 
@@ -16,7 +16,7 @@ g.url  # now points to "data/ATL08_..."
 
 ## Batch downloads with aria2c
 
-When downloading multiple granules, SpaceLiDAR automatically uses
+When downloading multiple granules, SpaceAltimetry automatically uses
 [aria2c](https://aria2.github.io/) for parallel, resumable downloads:
 
 ```julia
@@ -32,7 +32,7 @@ No manual setup needed — aria2c is bundled via `Aria2_jll`.
 NASA Earthdata requires authentication. Set up once:
 
 ```julia
-SpaceLiDAR.netrc!("your_username", "your_password")
+SpaceAltimetry.netrc!("your_username", "your_password")
 ```
 
 This writes to `~/.netrc` (or `~/_netrc` on Windows).
@@ -43,7 +43,7 @@ If you prefer to download externally (e.g., with wget or a download manager):
 
 ```julia
 granules = search(:ICESat2, :ATL08; extent=vietnam)
-SpaceLiDAR.write_urls("urls.txt", granules)
+SpaceAltimetry.write_urls("urls.txt", granules)
 ```
 
 Then use any tool:
@@ -98,7 +98,7 @@ sync("data/", true)  # all=true
 A common workflow for keeping a local mirror up to date:
 
 ```julia
-using SpaceLiDAR, Extents
+using SpaceAltimetry, Extents
 
 folder = "/data/icesat2/atl08/"
 vietnam = Extent(X=(102.0, 107.0), Y=(8.0, 12.0))

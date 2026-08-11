@@ -1,20 +1,20 @@
 # Contributing
 
-Thank you for your interest in contributing to SpaceLiDAR.jl! This document provides guidelines and information for contributors.
+Thank you for your interest in contributing to SpaceAltimetry.jl! This document provides guidelines and information for contributors.
 
 ## Reporting Issues
 
-If you encounter a bug or have a problem with the software, please [open an issue](https://github.com/evetion/SpaceLiDAR.jl/issues/new) on GitHub. When reporting issues, please include:
+If you encounter a bug or have a problem with the software, please [open an issue](https://github.com/evetion/SpaceAltimetry.jl/issues/new) on GitHub. When reporting issues, please include:
 
 - A clear and descriptive title.
 - A minimal reproducible example (MRE) that demonstrates the problem (please share data that you're using as input)
-- The version of SpaceLiDAR.jl you are using (`] status SpaceLiDAR` in the Julia REPL).
+- The version of SpaceAltimetry.jl you are using (`] status SpaceAltimetry` in the Julia REPL).
 - Your Julia version (`versioninfo()`).
 - Any relevant error messages or stack traces.
 
 ## Feature Requests
 
-We welcome suggestions for new features or improvements. Please [open an issue](https://github.com/evetion/SpaceLiDAR.jl/issues/new) and describe:
+We welcome suggestions for new features or improvements. Please [open an issue](https://github.com/evetion/SpaceAltimetry.jl/issues/new) and describe:
 
 - The feature you would like to see.
 - The use case or problem it would solve.
@@ -27,7 +27,7 @@ We welcome suggestions for new features or improvements. Please [open an issue](
 1. Fork the repository on GitHub.
 2. Clone your fork locally:
    ```bash
-   git clone https://github.com/your-username/SpaceLiDAR.jl.git
+   git clone https://github.com/your-username/SpaceAltimetry.jl.git
    ```
 3. Create a new branch for your changes:
    ```bash
@@ -46,20 +46,20 @@ We welcome suggestions for new features or improvements. Please [open an issue](
 - Add or update docstrings for any new or modified public functions.
 - Run the test suite before submitting to make sure everything passes:
   ```julia
-  ] test SpaceLiDAR
+  ] test SpaceAltimetry
   ```
 
 ### Submitting a Pull Request
 
 1. Push your branch to your fork on GitHub.
-2. [Open a pull request](https://github.com/evetion/SpaceLiDAR.jl/compare) against the `main` branch.
+2. [Open a pull request](https://github.com/evetion/SpaceAltimetry.jl/compare) against the `main` branch.
 3. Provide a clear description of your changes and reference any related issues.
 4. Ensure that CI checks pass on your pull request.
 
 ## Seeking Support
 
-If you have questions about using SpaceLiDAR.jl:
+If you have questions about using SpaceAltimetry.jl:
 
-- Check the [documentation](https://evetion.github.io/SpaceLiDAR.jl/stable/).
-- Search [existing issues](https://github.com/evetion/SpaceLiDAR.jl/issues) for similar questions.
+- Check the [documentation](https://evetion.github.io/SpaceAltimetry.jl/stable/).
+- Search [existing issues](https://github.com/evetion/SpaceAltimetry.jl/issues) for similar questions.
 - Open a new issue with the question label if your question is not answered elsewhere.

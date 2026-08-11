@@ -10,7 +10,7 @@ authors:
     given-names: Alex
     orcid: "https://orcid.org/0000-0002-8394-8889"
 date-released: 2021-07-30
-title: "SpaceLiDAR.jl"
+title: "SpaceAltimetry.jl"
 version: 0.2.2
-url: "https://github.com/evetion/SpaceLiDAR.jl"
+url: "https://github.com/evetion/SpaceAltimetry.jl"
 doi: 10.5281/zenodo.7213658

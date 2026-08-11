@@ -10,7 +10,7 @@ ICESat-2 has 6 beam pairs: `gt1l`, `gt1r`, `gt2l`, `gt2r`, `gt3l`, `gt3r`.
 Strong and weak beams alternate based on spacecraft orientation.
 
 ```julia
-using SpaceLiDAR
+using SpaceAltimetry
 
 g = granule("ATL08_20201121151145_08920913_006_01.h5")
 
@@ -38,7 +38,7 @@ t = table(g; tracks=["BEAM0101", "BEAM0110", "BEAM1000", "BEAM1011"])
 To see what tracks are read by default for a granule:
 
 ```julia
-SpaceLiDAR.default_tracks(g)
+SpaceAltimetry.default_tracks(g)
 # ("gt1l", "gt1r", "gt2l", "gt2r", "gt3l", "gt3r")  for ICESat-2
 # ("BEAM0000", ..., "BEAM1011")                       for GEDI
 ```

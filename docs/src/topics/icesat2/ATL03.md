@@ -3,8 +3,8 @@
 Version 6 — [User Guide](https://nsidc.org/sites/default/files/documents/user-guide/atl03-v006-userguide.pdf) ·  [ATBD](https://icesat-2.gsfc.nasa.gov/sites/default/files/page_files/ICESat2_ATL03_ATBD_r006.pdf)
 
 ```@setup atl03
-using SpaceLiDAR
-using SpaceLiDAR.H5Tables: ToDateTime, ToDateTimeConst, ToBool, InvertBool, SliceRow
+using SpaceAltimetry
+using SpaceAltimetry.H5Tables: ToDateTime, ToDateTimeConst, ToBool, InvertBool, SliceRow
 using Markdown
 
 function resolved_type(v)
@@ -38,7 +38,7 @@ the ATLAS instrument. This is the highest-resolution ICESat-2 product.
 ## Quick Start
 
 ```julia
-using SpaceLiDAR, DataFrames
+using SpaceAltimetry, DataFrames
 
 g = granule("ATL03_20201121151145_08920913_006_01.h5")
 t = table(g)
@@ -49,14 +49,14 @@ df = DataFrame(t)
 
 ```@example atl03
 g = dummy(ICESat2_Granule{:ATL03}) # hide
-vars_table(SpaceLiDAR.default_variables(g); attrs=SpaceLiDAR.default_attributes(g)) # hide
+vars_table(SpaceAltimetry.default_variables(g); attrs=SpaceAltimetry.default_attributes(g)) # hide
 ```
 
 ## Default Tracks
 
 ```@example atl03
 g = dummy(ICESat2_Granule{:ATL03}) # hide
-SpaceLiDAR.default_tracks(g)
+SpaceAltimetry.default_tracks(g)
 ```
 
 ## Filtering by Confidence
