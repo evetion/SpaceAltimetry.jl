@@ -169,7 +169,7 @@ end
 _granuleof(s::GranuleSource) = s.granule
 _granuleof(::Any) = nothing
 
-# ─── collect: materialize H5Table into SpaceLiDAR Table types ─────────────────
+# ─── collect: materialize H5Table into SpaceAltimetry Table types ─────────────────
 
 Base.collect(t::H5Tables.H5Table) = Table(Tables.columntable(t), granuleof(t))
 function Base.collect(t::H5Tables.PartitionedH5Table)

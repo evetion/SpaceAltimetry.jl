@@ -3,8 +3,8 @@
 Version 5 — [User Guide](https://nsidc.org/sites/default/files/documents/user-guide/atl12-v006-userguide.pdf) · [ATBD](https://icesat-2.gsfc.nasa.gov/sites/default/files/page_files/ICESat2_ATL12_ATBD_r006.pdf)
 
 ```@setup atl12
-using SpaceLiDAR
-using SpaceLiDAR.H5Tables: ToDateTime, ToDateTimeConst, ToBool, InvertBool, SliceRow
+using SpaceAltimetry
+using SpaceAltimetry.H5Tables: ToDateTime, ToDateTimeConst, ToBool, InvertBool, SliceRow
 using Markdown
 
 function resolved_type(v)
@@ -37,7 +37,7 @@ ATL12 provides along-track sea surface heights.
 ## Quick Start
 
 ```julia
-using SpaceLiDAR, DataFrames
+using SpaceAltimetry, DataFrames
 
 g = granule("ATL12_20220404110409_01891501_006_02.h5")
 t = table(g)
@@ -48,5 +48,5 @@ df = DataFrame(t)
 
 ```@example atl12
 g = dummy(ICESat2_Granule{:ATL12}) # hide
-vars_table(SpaceLiDAR.default_variables(g); attrs=SpaceLiDAR.default_attributes(g)) # hide
+vars_table(SpaceAltimetry.default_variables(g); attrs=SpaceAltimetry.default_attributes(g)) # hide
 ```

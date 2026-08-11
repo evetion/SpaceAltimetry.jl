@@ -3,8 +3,8 @@
 Version 5 — [User Guide](https://nsidc.org/sites/default/files/documents/user-guide/atl06-v006-userguide.pdf) · [ATBD](https://icesat-2.gsfc.nasa.gov/sites/default/files/page_files/ICESat2_ATL06_ATBD_r006.pdf)
 
 ```@setup atl06
-using SpaceLiDAR
-using SpaceLiDAR.H5Tables: ToDateTime, ToDateTimeConst, ToBool, InvertBool, SliceRow
+using SpaceAltimetry
+using SpaceAltimetry.H5Tables: ToDateTime, ToDateTimeConst, ToBool, InvertBool, SliceRow
 using Markdown
 
 function resolved_type(v)
@@ -37,7 +37,7 @@ ATL06 provides along-track land ice surface heights at 40 m segment resolution.
 ## Quick Start
 
 ```julia
-using SpaceLiDAR, DataFrames
+using SpaceAltimetry, DataFrames
 
 g = granule("ATL06_20220404104324_01881512_006_02.h5")
 t = table(g)
@@ -48,7 +48,7 @@ df = DataFrame(t)
 
 ```@example atl06
 g = dummy(ICESat2_Granule{:ATL06}) # hide
-vars_table(SpaceLiDAR.default_variables(g); attrs=SpaceLiDAR.default_attributes(g)) # hide
+vars_table(SpaceAltimetry.default_variables(g); attrs=SpaceAltimetry.default_attributes(g)) # hide
 ```
 
 ## Common Workflows
@@ -61,7 +61,7 @@ to_egm2008!(DataFrame(t))  # converts ellipsoidal → geoid heights
 
 ### Add custom variables
 ```julia
-vars = SpaceLiDAR.default_variables(g)
+vars = SpaceAltimetry.default_variables(g)
 push!(vars, Variable(:slope, "land_ice_segments/fit_statistics/dh_fit_dx", Float32))
 t = table(g; variables=vars)
 ```

@@ -1,11 +1,11 @@
 @testset "doctests" begin
     DocMeta.setdocmeta!(
-        SpaceLiDAR,
+        SpaceAltimetry,
         :DocTestSetup,
-        :(import SpaceLiDAR as SL);
+        :(import SpaceAltimetry as SL);
         recursive = true,
     )
-    doctest(SpaceLiDAR)
+    doctest(SpaceAltimetry)
 end
 
 @testset "utils" begin
@@ -37,16 +37,16 @@ end
     @test_throws ArgumentError search(:Foo, :GLAH14)
 
     # Time
-    @test length(SpaceLiDAR.search(:ICESat2, :ATL08, after = DateTime(2019, 12, 12), before = DateTime(2019, 12, 13))) == 161
-    @test length(SpaceLiDAR.search(:ICESat2, :ATL08, before = DateTime(2017, 12, 12))) == 0
-    @test length(SpaceLiDAR.search(:ICESat2, :ATL08, after = now())) == 0
-    @test_throws ErrorException SpaceLiDAR.search(:ICESat2, :ATL08, after = now() - Month(47), before = now() - Month(48))
+    @test length(SpaceAltimetry.search(:ICESat2, :ATL08, after = DateTime(2019, 12, 12), before = DateTime(2019, 12, 13))) == 161
+    @test length(SpaceAltimetry.search(:ICESat2, :ATL08, before = DateTime(2017, 12, 12))) == 0
+    @test length(SpaceAltimetry.search(:ICESat2, :ATL08, after = now())) == 0
+    @test_throws ErrorException SpaceAltimetry.search(:ICESat2, :ATL08, after = now() - Month(47), before = now() - Month(48))
 end
 
 @testset "download" begin
     if "EARTHDATA_USER" in keys(ENV)
         @info "Setting up Earthdata credentials for Github Actions"
-        SpaceLiDAR.netrc!(
+        SpaceAltimetry.netrc!(
             get(ENV, "EARTHDATA_USER", ""),
             get(ENV, "EARTHDATA_PW", ""),
         )
@@ -68,13 +68,13 @@ end
 
     # Test download! with nested directories that don't exist
     try
-        nested_dir = joinpath(tempdir(), "test_spacelidar/nested/path")
+        nested_dir = joinpath(tempdir(), "test_SpaceAltimetry/nested/path")
         g2 = copy(granules[2])
         SL.download!(g2, nested_dir)
         @test isfile(g2)
         @test isdir(nested_dir)
         rm(g2)
-        rm(joinpath(tempdir(), "test_spacelidar"); recursive = true)
+        rm(joinpath(tempdir(), "test_SpaceAltimetry"); recursive = true)
     catch e
         if e isa Downloads.RequestError
             @error "Could not download granule due to network error(s)"
@@ -85,7 +85,7 @@ end
 
     # Test download! with path that needs normalization
     try
-        unnormalized_path = joinpath(tempdir(), "test_spacelidar2", ".", "subdir", "..", "final")
+        unnormalized_path = joinpath(tempdir(), "test_SpaceAltimetry2", ".", "subdir", "..", "final")
         g3 = copy(granules[3])
         SL.download!(g3, unnormalized_path)
         @test isfile(g3)
@@ -94,7 +94,7 @@ end
         @test isdir(expected_path)
         @test g3.url == joinpath(expected_path, g3.id)
         rm(g3)
-        rm(joinpath(tempdir(), "test_spacelidar2"); recursive = true)
+        rm(joinpath(tempdir(), "test_SpaceAltimetry2"); recursive = true)
     catch e
         if e isa Downloads.RequestError
             @error "Could not download granule due to network error(s)"
@@ -375,7 +375,7 @@ end
         @test r2.height[1] ≈ -17.0154953
         @test nt2.height[1] == 0.0  # non-mutating wrapper must not mutate input
 
-        # SpaceLiDAR.Table
+        # SpaceAltimetry.Table
         g = SL.granule(GLAH06_fn)
         t = SL.points(g)
         h_before = t.height[1]
@@ -429,7 +429,7 @@ end
         @test r2.height[1] ≈ 99.3 atol = 0.1
         @test nt2.height[1] == 100.0  # non-mutating wrapper must not mutate input
 
-        # SpaceLiDAR.Table (from points, has height_reference)
+        # SpaceAltimetry.Table (from points, has height_reference)
         g = SL.granule(GLAH06_fn)
         t = SL.points(g)
         h_before = copy(t.height[1:3])
@@ -498,7 +498,7 @@ end
         q = SL.icesat_quality(nt)
         @test q == BitVector([1, 0])
 
-        # SpaceLiDAR.Table (GLAH06 has the quality columns)
+        # SpaceAltimetry.Table (GLAH06 has the quality columns)
         g = SL.granule(GLAH06_fn)
         t = SL.points(g)
         @test hasproperty(t, :height)
@@ -666,7 +666,7 @@ end
     @test GeoInterface.crs(SL.granule(GLAH14_fn)) == crs_glah06
 end
 
-struct UnknownGranule <: SpaceLiDAR.Granule end
+struct UnknownGranule <: SpaceAltimetry.Granule end
 
 @testset "GeoInterface granule accessors" begin
     g = SL.granule(GLAH06_fn)

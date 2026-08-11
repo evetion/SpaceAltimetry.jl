@@ -5,7 +5,7 @@ using Markdown
 using InteractiveUtils
 
 # ╔═╡ b7aa82f4-f38f-4dd2-9d86-984205cf95b9
-using SpaceLiDAR
+using SpaceAltimetry
 
 # ╔═╡ 2337d9f8-7615-43cc-9c8d-83176b685b8e
 using DataFrames
@@ -17,11 +17,11 @@ using GeoDataFrames
 using LazIO
 
 # ╔═╡ a5acd89a-320b-4cc8-81d3-16fbedb689b0
-md"""# SpaceLiDAR.jl @ JuliaCon 2021"""
+md"""# SpaceAltimetry.jl @ JuliaCon 2021"""
 
 # ╔═╡ 8c11cb9b-ef88-48f3-a4c3-9dbfee1ccbce
 md"""
-An example of using SpaceLiDAR to retrieve and process ICESat-2 and GEDI satellite LiDAR data."""
+An example of using SpaceAltimetry to retrieve and process ICESat-2 and GEDI satellite LiDAR data."""
 
 # ╔═╡ 1d8c9cd5-544a-4267-9895-7d41a81146d8
 md"""#### Search"""
@@ -41,7 +41,7 @@ md"""These datasets (granules) come in the form of HDF5 (.h5) files, with *a lot
 # ╔═╡ bf418df8-6923-44f3-a067-367a7c52afdf
 begin
 	granule = copy(granules[1])
-	SpaceLiDAR.download!(granule)
+	SpaceAltimetry.download!(granule)
 end
 
 # ╔═╡ 6da50bf6-fd03-479b-8d04-d9ccc41415c5

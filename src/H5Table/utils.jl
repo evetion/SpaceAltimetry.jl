@@ -131,7 +131,7 @@ resolve_transform(e::ExpandDims, file::HDF5.File, path::AbstractString) =
 
 # ─── Source interface ──────────────────────────────────────────────────────────
 # An `H5Table` reads from a *source*. The trivial source is an `HDF5.File`, but a
-# richer source (e.g. SpaceLiDAR's `GranuleSource`, or a future cloud reference)
+# richer source (e.g. SpaceAltimetry's `GranuleSource`, or a future cloud reference)
 # can carry provenance and resolve variables by name. A source must implement:
 #
 #   h5handle(source)::HDF5.File              — the (cached) open file to read from

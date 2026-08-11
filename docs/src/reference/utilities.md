@@ -2,6 +2,6 @@
 
 ```@autodocs
 Private = false
-Modules = [SpaceLiDAR]
+Modules = [SpaceAltimetry]
 Pages   = ["geom.jl", "geoid.jl", "utils.jl"]
 ```

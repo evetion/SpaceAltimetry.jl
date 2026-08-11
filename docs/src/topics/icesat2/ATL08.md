@@ -3,8 +3,8 @@
 Version 6 — [User Guide](https://nsidc.org/sites/default/files/documents/user-guide/atl08-v006-userguide.pdf) · [ATBD](https://nsidc.org/sites/default/files/documents/technical-reference/icesat2_atl08_atbd_v006_0.pdf)
 
 ```@setup atl08
-using SpaceLiDAR
-using SpaceLiDAR.H5Tables: ToDateTime, ToDateTimeConst, ToBool, InvertBool, SliceRow
+using SpaceAltimetry
+using SpaceAltimetry.H5Tables: ToDateTime, ToDateTimeConst, ToBool, InvertBool, SliceRow
 using Markdown
 
 function resolved_type(v)
@@ -37,7 +37,7 @@ ATL08 provides terrain and canopy heights from photon-counting lidar at 100 m se
 ## Quick Start
 
 ```julia
-using SpaceLiDAR, DataFrames
+using SpaceAltimetry, DataFrames
 
 g = granule("ATL08_20201121151145_08920913_006_01.h5")
 t = table(g)        # terrain (ground) heights by default
@@ -48,7 +48,7 @@ df = DataFrame(t)
 
 ```@example atl08
 g = dummy(ICESat2_Granule{:ATL08}) # hide
-vars_table(SpaceLiDAR.default_variables(g); attrs=SpaceLiDAR.default_attributes(g)) # hide
+vars_table(SpaceAltimetry.default_variables(g); attrs=SpaceAltimetry.default_attributes(g)) # hide
 ```
 
 ## Canopy Heights

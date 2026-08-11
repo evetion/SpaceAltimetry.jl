@@ -43,8 +43,8 @@ end
 Implementation of https://en.wikipedia.org/wiki/Great-circle_navigation.
 Find all `nparts` intermediate angles between two points on a sphere.
 
-Used to precalculate approximate angles of the groundtrack for the SpaceLiDAR satellites
-in [`SpaceLiDAR.track_angle`](@ref).
+Used to precalculate approximate angles of the groundtrack for the SpaceAltimetry satellites
+in [`SpaceAltimetry.track_angle`](@ref).
 """
 function greatcircle(φ₁, λ₁, φ₂, λ₂, nparts = 88)
 
@@ -94,7 +94,7 @@ Points are given as `longitude` and `latitude` pairs in their own vector.
 The angle for the first point is undefined and set to the second.
 
 Because of the inherent noise in the point locations, the angles will be noisy too, especially for
-ICESat-2 ATL03. Either smooth the results or use an approximation using [`SpaceLiDAR.track_angle`](@ref).
+ICESat-2 ATL03. Either smooth the results or use an approximation using [`SpaceAltimetry.track_angle`](@ref).
 
 Returns a `Vector{Real}` of angles.
 """
@@ -116,7 +116,7 @@ end
 
 Shift `longitude` and `latitude` with `distance` in [m] in direction `angle`, where North is 0°.
 Returns a tuple of the shifted coordinates: `(longitude, latitude)`. Useful for offsetting
-SpaceLiDAR points to the left or right of the track, in combination with [`angle!`](@ref).
+SpaceAltimetry points to the left or right of the track, in combination with [`angle!`](@ref).
 """
 function shift(longitude, latitude, angle, distance)
     θ = deg2rad(angle)

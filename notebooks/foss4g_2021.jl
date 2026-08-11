@@ -5,7 +5,7 @@ using Markdown
 using InteractiveUtils
 
 # ╔═╡ b7aa82f4-f38f-4dd2-9d86-984205cf95b9
-using SpaceLiDAR
+using SpaceAltimetry
 
 # ╔═╡ 2337d9f8-7615-43cc-9c8d-83176b685b8e
 using DataFrames
@@ -23,11 +23,11 @@ using GeoArrays
 using Plots
 
 # ╔═╡ a5acd89a-320b-4cc8-81d3-16fbedb689b0
-md"""# SpaceLiDAR.jl @ FOSS4G 2021"""
+md"""# SpaceAltimetry.jl @ FOSS4G 2021"""
 
 # ╔═╡ 8c11cb9b-ef88-48f3-a4c3-9dbfee1ccbce
 md"""
-An example of using SpaceLiDAR to retrieve and process ICESat-2 and GEDI satellite LiDAR data."""
+An example of using SpaceAltimetry to retrieve and process ICESat-2 and GEDI satellite LiDAR data."""
 
 # ╔═╡ 1d8c9cd5-544a-4267-9895-7d41a81146d8
 md"""#### Search"""
@@ -47,7 +47,7 @@ md"""These datasets (granules) come in the form of HDF5 (.h5) files, with *a lot
 # ╔═╡ bf418df8-6923-44f3-a067-367a7c52afdf
 begin
 	granule = copy(granules[1])
-	SpaceLiDAR.download!(granule)
+	SpaceAltimetry.download!(granule)
 end
 
 # ╔═╡ 6da50bf6-fd03-479b-8d04-d9ccc41415c5
@@ -93,7 +93,7 @@ ga = begin
 	GeoArrays.bbox!(ga, vietnam)
 	epsg!(ga, 4326)
 
-	SpaceLiDAR.interpolate!(ga, tt)
+	SpaceAltimetry.interpolate!(ga, tt)
 
 	GeoArrays.write!("test.tif", ga)
 	ga
@@ -110,7 +110,7 @@ GeoArrays = "2fb1d81b-e6a0-5fc5-82e6-8e06903437ab"
 GeoDataFrames = "62cb38b5-d8d2-4862-a48e-6a340996859f"
 LazIO = "c3605908-9f0f-11e8-0a72-0d361c15a277"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
-SpaceLiDAR = "29bf0bfc-420f-4fa5-b441-811fd9e6e11d"
+SpaceAltimetry = "29bf0bfc-420f-4fa5-b441-811fd9e6e11d"
 
 [compat]
 DataFrames = "~1.2.2"
@@ -118,7 +118,7 @@ GeoArrays = "~0.5.1"
 GeoDataFrames = "~0.1.5"
 LazIO = "~0.3.3"
 Plots = "~1.22.3"
-SpaceLiDAR = "~0.1.3"
+SpaceAltimetry = "~0.1.3"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -1377,7 +1377,7 @@ git-tree-sha1 = "b3363d7460f7d098ca0912c69b082f75625d7508"
 uuid = "a2af1166-a08f-5f64-846c-94a0d3cef48c"
 version = "1.0.1"
 
-[[SpaceLiDAR]]
+[[SpaceAltimetry]]
 deps = ["AWSCore", "AWSS3", "ArchGDAL", "CSV", "CategoricalArrays", "Dates", "Distances", "Downloads", "FillArrays", "GeoArrays", "GeoDataFrames", "HDF5", "HTTP", "ImageFiltering", "JSON", "LazIO", "NearestNeighbors", "PolygonOps", "Printf", "ProgressMeter", "Random", "RecipesBase", "StarTIN", "StaticArrays", "Statistics", "Tables", "TypedTables"]
 git-tree-sha1 = "8b694cd8070b1b75331e18a1ca28b9819b0ec3de"
 uuid = "29bf0bfc-420f-4fa5-b441-811fd9e6e11d"

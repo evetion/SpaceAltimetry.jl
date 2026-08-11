@@ -16,7 +16,7 @@ function default_variables(::ICESat2_Granule{:ATL24})
         Variable(:depth, "profile_segments/depth", Float32),
         Variable(:confidence, "profile_segments/confidence", Int8),
         Variable(:datetime, "profile_segments/delta_time", Float64,
-            ToDateTime("/ancillary_data/atlas_sdp_gps_epoch", SpaceLiDAR.gps_offset)),
+            ToDateTime("/ancillary_data/atlas_sdp_gps_epoch", SpaceAltimetry.gps_offset)),
         Variable(:surface_h, "profile_segments/sea_surface_h", Float32),
     ]
 end
@@ -46,7 +46,7 @@ on the product symbol, which is parsed from the filename automatically.
 ## 3. Verify it works
 
 ```julia
-using SpaceLiDAR
+using SpaceAltimetry
 
 g = granule("ATL24_20230101120000_01234567_006_01.h5")
 typeof(g)  # ICESat2_Granule{:ATL24}
@@ -81,12 +81,12 @@ function atl24_shallow_variables()
         Variable(:latitude, "profile_segments/latitude", Float64),
         Variable(:depth, "profile_segments/shallow/depth", Float32),
         Variable(:datetime, "profile_segments/delta_time", Float64,
-            ToDateTime("/ancillary_data/atlas_sdp_gps_epoch", SpaceLiDAR.gps_offset)),
+            ToDateTime("/ancillary_data/atlas_sdp_gps_epoch", SpaceAltimetry.gps_offset)),
     ]
 end
 ```
 
-Export from `src/SpaceLiDAR.jl` if users need it directly.
+Export from `src/SpaceAltimetry.jl` if users need it directly.
 
 ## 6. Add documentation
 

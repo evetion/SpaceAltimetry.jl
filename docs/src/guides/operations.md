@@ -8,7 +8,7 @@ only at the end:
 ```julia
 using DataFrames
 using Extents
-using SpaceLiDAR
+using SpaceAltimetry
 
 g = granule("GLAH14_634_1102_001_0071_0_01_0001.H5")
 ext = Extent(X = (-180.0, 0.0), Y = (60.0, 80.0))
@@ -20,10 +20,10 @@ df = table(g) |>
     DataFrame
 ```
 
-The intermediate operations above are lazy. SpaceLiDAR first gathers the union
+The intermediate operations above are lazy. SpaceAltimetry first gathers the union
 of required columns, reads the HDF5 data once, then applies the operations in
 left-to-right pipe order. `DataFrame` can be replaced by `collect` if you want
-SpaceLiDAR's lightweight `Table`/`PartitionedTable` wrappers instead.
+SpaceAltimetry's lightweight `Table`/`PartitionedTable` wrappers instead.
 
 The two-argument verbs remain eager:
 

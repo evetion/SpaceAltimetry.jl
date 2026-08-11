@@ -1,7 +1,7 @@
 # Granules
 
 A **granule** represents a single data file from a satellite mission. It is the
-fundamental unit of data in SpaceLiDAR — every operation starts with one or more
+fundamental unit of data in SpaceAltimetry — every operation starts with one or more
 granules.
 
 ## What is a Granule?
@@ -11,7 +11,7 @@ Each granule maps to one HDF5 file and carries metadata: a unique ID, a URL
 
 ## Granule Types
 
-SpaceLiDAR defines a granule type per mission:
+SpaceAltimetry defines a granule type per mission:
 
 - `ICESat2_Granule{product}` — parameterized by product (`:ATL03`, `:ATL06`, `:ATL08`, `:ATL12`)
 - `GEDI_Granule{product}` — parameterized by product (`:GEDI02_A`)

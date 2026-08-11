@@ -39,7 +39,7 @@ _sat_ok(x::Number) = x < 3                             # saturation_correction
 #
 # Both operations are best-effort: tables that don't support metadata read
 # (`NamedTuple`) are projected unconditionally; tables that don't support
-# write (`SpaceLiDAR.Table`) are projected but the new CRS isn't recorded.
+# write (`SpaceAltimetry.Table`) are projected but the new CRS isn't recorded.
 
 const _CRS_KEY = "GEOINTERFACE:crs"
 const _CRS_WGS84_3D = GeoFormatTypes.EPSG(4979)               # WGS 84 ellipsoidal 3D
@@ -116,7 +116,7 @@ the geoid undulation). After a successful projection, the new CRS is written
 to `t`'s metadata if writable.
 
 `t` is any Tables.jl-compatible table whose `:height` column is a mutable
-`AbstractVector` (e.g. `DataFrame`, `NamedTuple` of vectors, `SpaceLiDAR.Table`).
+`AbstractVector` (e.g. `DataFrame`, `NamedTuple` of vectors, `SpaceAltimetry.Table`).
 For read-only `H5Table` / `PartitionedH5Table`, only the non-mutating
 `to_egm2008(t)` is defined.
 """
