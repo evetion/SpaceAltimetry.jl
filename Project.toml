@@ -1,7 +1,7 @@
-name = "SpaceLiDAR"
+name = "SpaceAltimetry"
 uuid = "29bf0bfc-420f-4fa5-b441-811fd9e6e11d"
-authors = ["Maarten Pronk", "Deltares"]
-version = "0.4.2"
+authors = ["Maarten Pronk", "Alex Gardner"]
+version = "0.4.3"
 
 [deps]
 AWSS3 = "1c724243-ef5b-51ab-93f4-b0a88ac62a95"
@@ -33,7 +33,7 @@ TimeZones = "f269a46b-ccf7-5d73-abea-4c690281aa53"
 Makie = "ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a"
 
 [extensions]
-SpaceLiDARMakieExt = "Makie"
+SpaceAltimetryMakieExt = "Makie"
 
 [compat]
 AWSS3 = "0.10, 0.11"

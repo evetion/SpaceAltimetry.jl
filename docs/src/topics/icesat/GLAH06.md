@@ -3,8 +3,8 @@
 Version 34 — [User Guide](https://nsidc.org/sites/nsidc.org/files/MULTI-GLAH01-V033-V034-UserGuide.pdf) · [ATBD](https://eospso.nasa.gov/sites/default/files/atbd/ATBD-GLAS-02.pdf)
 
 ```@setup glah06
-using SpaceLiDAR
-using SpaceLiDAR.H5Tables: ToDateTime, ToDateTimeConst, ToBool, InvertBool, SliceRow
+using SpaceAltimetry
+using SpaceAltimetry.H5Tables: ToDateTime, ToDateTimeConst, ToBool, InvertBool, SliceRow
 using Markdown
 
 function resolved_type(v)
@@ -38,7 +38,7 @@ Altimeter System (GLAS) instrument on ICESat.
 ## Quick Start
 
 ```julia
-using SpaceLiDAR, DataFrames
+using SpaceAltimetry, DataFrames
 
 g = granule("GLAH06_634_2131_002_0084_4_01_0001.H5")
 t = table(g)
@@ -49,7 +49,7 @@ df = DataFrame(t)
 
 ```@example glah06
 g = dummy(ICESat_Granule{:GLAH06}) # hide
-vars_table(SpaceLiDAR.default_variables(g)) # hide
+vars_table(SpaceAltimetry.default_variables(g)) # hide
 ```
 
 ## Coordinate System

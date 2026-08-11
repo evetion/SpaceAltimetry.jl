@@ -1,13 +1,13 @@
 [![DOI](https://zenodo.org/badge/241095197.svg)](https://zenodo.org/badge/latestdoi/241095197)
-# SpaceLiDAR
+# SpaceAltimetry
 
-SpaceLiDAR.jl searches, downloads, and reads spaceborne lidar data
+SpaceAltimetry.jl searches, downloads, and reads spaceborne lidar data
 from the ICESat, ICESat-2, and GEDI NASA missions. Granules are exposed as lazy
 [Tables.jl](https://github.com/JuliaData/Tables.jl)-compatible HDF5 tables, so
 you can inspect product data quickly and materialize only when you need a sink
 such as a `DataFrame`.
 
-If you use SpaceLiDAR in your research, please consider [citing it](https://zenodo.org/badge/latestdoi/241095197). Feel free to submit issues and PRs to support more products. Note that you can also use SpaceLiDAR.jl for unsupported products.
+If you use SpaceAltimetry in your research, please consider [citing it](https://zenodo.org/badge/latestdoi/241095197). Feel free to submit issues and PRs to support more products. Note that you can also use SpaceAltimetry.jl for unsupported products.
 
 ## Supported data products
 

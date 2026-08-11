@@ -85,7 +85,7 @@ t = table(g; tracks=["gt1l", "gt2l"])
 Replicating the old `points(g)` behavior for ICESat:
 
 ```julia
-using SpaceLiDAR, DataFrames
+using SpaceAltimetry, DataFrames
 
 g = granule("GLAH06_634_2131_002_0084_4_01_0001.H5")
 t = table(g)

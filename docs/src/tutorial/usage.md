@@ -1,12 +1,12 @@
 # Getting Started
 
-This tutorial walks you through a typical SpaceLiDAR workflow: search, download,
+This tutorial walks you through a typical SpaceAltimetry workflow: search, download,
 read data, and visualize. Each step is self-contained — skip to what you need.
 
 ## 1. Search for granules
 
 ```julia
-using SpaceLiDAR
+using SpaceAltimetry
 
 # Find all ATL08 granules worldwide
 granules = search(:ICESat2, :ATL08)
@@ -33,7 +33,7 @@ g.info  # parsed metadata (date, track, cycle, etc.)
 Set up NASA Earthdata credentials (once):
 
 ```julia
-SpaceLiDAR.netrc!("username", "password")
+SpaceAltimetry.netrc!("username", "password")
 ```
 
 Download a single granule or a batch (uses aria2c for parallel downloads):

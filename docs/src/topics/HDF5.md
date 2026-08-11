@@ -4,13 +4,13 @@ H5Table is a generic module for reading HDF5 datasets as tabular data. It handle
 dimension flattening, nodata masking, and the Tables.jl interface — without any
 knowledge of specific satellite products.
 
-SpaceLiDAR extends H5Table with product-specific schemas via multiple dispatch.
+SpaceAltimetry extends H5Table with product-specific schemas via multiple dispatch.
 
 ## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  SpaceLiDAR                                             │
+│  SpaceAltimetry                                             │
 │  table(g::Granule) / explore(g::Granule)                │
 │  ├── default_variables(g) → schema with transforms      │
 │  ├── default_tracks(g) → track names                    │
@@ -31,7 +31,7 @@ SpaceLiDAR extends H5Table with product-specific schemas via multiple dispatch.
 ### Level 1: Generic HDF5 (any file)
 
 ```julia
-using SpaceLiDAR.H5Tables, HDF5
+using SpaceAltimetry.H5Tables, HDF5
 
 file = h5open("any_file.h5", "r")
 t = H5Table(file; vars=[:lat => "data/latitude", :lon => "data/longitude"])
@@ -136,7 +136,7 @@ function default_variables(::ICESat2_Granule{:ATL24})
     ]
 end
 
-default_tracks(::ICESat2_Granule{:ATL24}) = SpaceLiDAR.icesat2_tracks
+default_tracks(::ICESat2_Granule{:ATL24}) = SpaceAltimetry.icesat2_tracks
 ```
 
 Then `table(g)` and `explore(g)` work automatically.

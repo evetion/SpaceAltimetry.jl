@@ -1,6 +1,6 @@
 # Search & Discovery
 
-SpaceLiDAR provides tools to find granules — both locally and from NASA's
+SpaceAltimetry provides tools to find granules — both locally and from NASA's
 Common Metadata Repository (CMR).
 
 ## Local Discovery
@@ -19,7 +19,7 @@ automatically.
 ## Remote Search (NASA CMR)
 
 ```julia
-using SpaceLiDAR, Dates, Extents
+using SpaceAltimetry, Dates, Extents
 
 extent = Extent(X=(-10.0, 10.0), Y=(50.0, 60.0))
 

@@ -1,4 +1,4 @@
-using SpaceLiDAR
+using SpaceAltimetry
 using Test
 using Aqua
 using ExplicitImports
@@ -17,7 +17,7 @@ using DataAPI
 using GeoFormatTypes
 
 const rng = MersenneTwister(54321)
-const SL = SpaceLiDAR
+const SL = SpaceAltimetry
 
 @static if Sys.isapple()
     using MozillaCACerts_jll
@@ -28,7 +28,7 @@ end
 testdir = @__DIR__
 datadir = joinpath(testdir, "data")
 isdir(datadir) || mkdir(datadir)
-SpaceLiDAR.load_dotenv()  # get earthdata credentials for local testing
+SpaceAltimetry.load_dotenv()  # get earthdata credentials for local testing
 
 function download_artifact(version, source_filename)
     local_path = joinpath(datadir, source_filename)
@@ -48,10 +48,10 @@ GLAH06_fn = download_artifact(v"0.1", "GLAH06_634_2131_002_0084_4_01_0001.H5")
 empty_bbox = (min_x = 0.0, min_y = 0.0, max_x = 0.0, max_y = 0.0)
 empty_extent = convert(Extent, empty_bbox)
 
-@testset "SpaceLiDAR.jl" begin
+@testset "SpaceAltimetry.jl" begin
     @testset "Aqua" begin
         Aqua.test_all(
-            SpaceLiDAR;
+            SpaceAltimetry;
             deps_compat = (; check_extras = false),
             piracies = (; treat_as_own = [Extents.Extent]),
         )
@@ -65,7 +65,7 @@ empty_extent = convert(Extent, empty_bbox)
         # imports, stale imports, explicit-import ownership, self-qualified
         # accesses) are enforced.
         test_explicit_imports(
-            SpaceLiDAR;
+            SpaceAltimetry;
             all_explicit_imports_are_public = false,
             all_qualified_accesses_via_owners = false,
             all_qualified_accesses_are_public = false,

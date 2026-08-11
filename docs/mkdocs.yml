@@ -1,8 +1,8 @@
-site_name: SpaceLiDAR.jl
-repo_url: https://github.com/evetion/SpaceLiDAR.jl
-site_description: SpaceLiDAR.jl
+site_name: SpaceAltimetry.jl
+repo_url: https://github.com/evetion/SpaceAltimetry.jl
+site_description: SpaceAltimetry.jl
 site_author: Maarten Pronk
-site_url: https://www.evetion.nl/SpaceLiDAR.jl/
+site_url: https://www.evetion.nl/SpaceAltimetry.jl/
 
 extra_css:
   - assets/Documenter.css
@@ -110,13 +110,13 @@ markdown_extensions:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
 edit_uri: edit/master/docs/
-repo_name: evetion/SpaceLiDAR.jl
+repo_name: evetion/SpaceAltimetry.jl
 extra:
   version:
     provider: mike
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/evetion/SpaceLiDAR.jl
+      link: https://github.com/evetion/SpaceAltimetry.jl
       name: Source code
     - icon: fontawesome/brands/mastodon
       link: https://fosstodon.org/@evetion

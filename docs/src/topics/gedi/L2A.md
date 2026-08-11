@@ -3,8 +3,8 @@
 Version 2 — [User Guide](https://lpdaac.usgs.gov/documents/998/GEDI02_UserGuide_V21.pdf) · [ATBD](https://lpdaac.usgs.gov/documents/581/GEDI_WF_ATBD_v1.0.pdf)
 
 ```@setup gedi
-using SpaceLiDAR
-using SpaceLiDAR.H5Tables: ToDateTime, ToDateTimeConst, ToBool, InvertBool, SliceRow
+using SpaceAltimetry
+using SpaceAltimetry.H5Tables: ToDateTime, ToDateTimeConst, ToBool, InvertBool, SliceRow
 using Markdown
 
 function resolved_type(v)
@@ -40,7 +40,7 @@ GEDI L2A provides ground elevation, canopy height metrics, and relative height
 ## Quick Start
 
 ```julia
-using SpaceLiDAR, DataFrames
+using SpaceAltimetry, DataFrames
 
 g = granule("GEDI02_A_2019242104318_O04046_01_T02343_02_003_02_V002.h5")
 t = table(g)
@@ -51,13 +51,13 @@ df = DataFrame(t)
 
 ```@example gedi
 g = dummy(GEDI_Granule{:GEDI02_A}) # hide
-vars_table(SpaceLiDAR.default_variables(g); attrs=SpaceLiDAR.default_attributes(g)) # hide
+vars_table(SpaceAltimetry.default_variables(g); attrs=SpaceAltimetry.default_attributes(g)) # hide
 ```
 
 ## Default Tracks
 
 ```@example gedi
-SpaceLiDAR.default_tracks(g)
+SpaceAltimetry.default_tracks(g)
 ```
 
 ## Canopy Heights
@@ -88,7 +88,7 @@ For the full L3 filter (including algorithm-based zcross/toploc checks),
 you would need to read additional variables:
 
 ```julia
-vars = [SpaceLiDAR.default_variables(g)...,
+vars = [SpaceAltimetry.default_variables(g)...,
     Variable(:selected_algorithm, "selected_algorithm", UInt8),
     Variable(:rx_assess_quality_flag, "rx_assess/quality_flag", UInt8),
     Variable(:degrade_flag, "degrade_flag", UInt8),

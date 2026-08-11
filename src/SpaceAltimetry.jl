@@ -1,4 +1,4 @@
-module SpaceLiDAR
+module SpaceAltimetry
 
 using Dates: Dates, @dateformat_str, Day, datetime2unix, unix2datetime
 using CategoricalArrays: CategoricalArrays, CategoricalArray

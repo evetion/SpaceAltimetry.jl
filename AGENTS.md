@@ -1,11 +1,11 @@
 # AGENTS.md
 
-Instructions for AI coding agents working on **SpaceLiDAR.jl**. This is a
+Instructions for AI coding agents working on **SpaceAltimetry.jl**. This is a
 high-level orientation document — read it before touching the codebase.
 
 ## What this package does
 
-SpaceLiDAR.jl ingests HDF5 granules from spaceborne LiDAR missions
+SpaceAltimetry.jl ingests HDF5 granules from spaceborne LiDAR missions
 (ICESat, ICESat‑2, GEDI) and exposes them as Julia tables (Tables.jl /
 DataFrames). It also supports searching/downloading granules from NASA's
 CMR + S3 + Aria2, geoid conversion (EGM2008, TOPEX), and a GeoInterface
@@ -29,7 +29,7 @@ which satisfy the Tables.jl column-access interface.
 
 ```
 src/
-├── SpaceLiDAR.jl          # Top-level module, re-exports H5Table helpers
+├── SpaceAltimetry.jl          # Top-level module, re-exports H5Table helpers
 ├── granule.jl             # abstract type Granule + download/AWS plumbing
 ├── search.jl              # CMR (NASA) granule search
 ├── geoid.jl               # EGM2008 / TOPEX height conversions
@@ -73,7 +73,7 @@ and dispatches to the product-specific `default_variables(g)` schema.
 ## The H5Table submodule (where most of the action happens)
 
 `H5Table` is a small, self-contained submodule. Treat it as a generic
-"HDF5 → Tables.jl" engine. SpaceLiDAR product templates are just
+"HDF5 → Tables.jl" engine. SpaceAltimetry product templates are just
 collections of `Variable` / `Attribute` specs handed to it.
 
 ### Core types (`src/H5Table/table.jl`)
@@ -187,7 +187,7 @@ wouldn't flatten cleanly together.
   comments only where intent isn't obvious from the code (e.g. column-
   major reversal, transform-aware dim handling).
 - Keep submodule boundaries: `H5Table` should remain usable as a
-  standalone generic reader; SpaceLiDAR-specific logic stays in
+  standalone generic reader; SpaceAltimetry-specific logic stays in
   `src/{GEDI,ICESat,ICESat-2}/`.
 
 ## When in doubt

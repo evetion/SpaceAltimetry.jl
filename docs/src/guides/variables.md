@@ -6,10 +6,10 @@ You can customize which columns you get.
 ## Viewing defaults
 
 ```julia
-using SpaceLiDAR
+using SpaceAltimetry
 
 g = granule("ATL08_20201121151145_08920913_006_01.h5")
-vars = SpaceLiDAR.default_variables(g)
+vars = SpaceAltimetry.default_variables(g)
 ```
 
 Each `Variable` has a name, HDF5 path, element type, and optional transform.
@@ -19,7 +19,7 @@ Each `Variable` has a name, HDF5 path, element type, and optional transform.
 Append to the defaults:
 
 ```julia
-vars = SpaceLiDAR.default_variables(g)
+vars = SpaceAltimetry.default_variables(g)
 push!(vars, Variable(:slope, "land_segments/terrain/h_te_slope", Float32))
 push!(vars, Variable(:canopy_h, "land_segments/canopy/h_mean_canopy", Float32))
 
@@ -32,10 +32,10 @@ ATL08 and GEDI have pre-defined canopy variable sets:
 
 ```julia
 # ATL08 canopy (reads h_mean_canopy_abs instead of h_te_mean)
-t = table(g; variables=SpaceLiDAR.atl08_canopy_variables())
+t = table(g; variables=SpaceAltimetry.atl08_canopy_variables())
 
 # GEDI canopy (reads elev_highestreturn instead of elev_lowestmode)
-t = table(g; variables=SpaceLiDAR.gedi_l2a_canopy_variables())
+t = table(g; variables=SpaceAltimetry.gedi_l2a_canopy_variables())
 ```
 
 ## Custom variable from scratch
@@ -51,7 +51,7 @@ With a transform (applied at read time):
 ```julia
 Variable(:is_land, "land_segments/surf_type", Int8, ToBool())
 Variable(:time, "land_segments/delta_time", Float64,
-    ToDateTime("/ancillary_data/atlas_sdp_gps_epoch", SpaceLiDAR.gps_offset))
+    ToDateTime("/ancillary_data/atlas_sdp_gps_epoch", SpaceAltimetry.gps_offset))
 ```
 
 Direct `H5Table` construction uses the same `Variable` form for transformed
@@ -78,7 +78,7 @@ Available transforms:
 Attributes are scalar metadata attached to each track (partition):
 
 ```julia
-attrs = SpaceLiDAR.default_attributes(g)
+attrs = SpaceAltimetry.default_attributes(g)
 ```
 
 They become constant columns in the resulting table (e.g., `:detector_id`,

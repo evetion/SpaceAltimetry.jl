@@ -1,13 +1,13 @@
-[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://evetion.github.io/SpaceLiDAR.jl/stable)
-[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://evetion.github.io/SpaceLiDAR.jl/dev)
-[![CI](https://github.com/evetion/SpaceLiDAR.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/evetion/SpaceLiDAR.jl/actions/workflows/CI.yml)
-[![codecov](https://codecov.io/gh/evetion/SpaceLiDAR.jl/branch/master/graph/badge.svg?token=nztwnGtIcY)](https://codecov.io/gh/evetion/SpaceLiDAR.jl)
+[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://evetion.github.io/SpaceAltimetry.jl/stable)
+[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://evetion.github.io/SpaceAltimetry.jl/dev)
+[![CI](https://github.com/evetion/SpaceAltimetry.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/evetion/SpaceAltimetry.jl/actions/workflows/CI.yml)
+[![codecov](https://codecov.io/gh/evetion/SpaceAltimetry.jl/branch/master/graph/badge.svg?token=nztwnGtIcY)](https://codecov.io/gh/evetion/SpaceAltimetry.jl)
 [![DOI](https://zenodo.org/badge/241095197.svg)](https://zenodo.org/badge/latestdoi/241095197)
 [![Aqua QA](https://juliatesting.github.io/Aqua.jl/dev/assets/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 
-# SpaceLiDAR
+# SpaceAltimetry
 
-SpaceLiDAR.jl searches, downloads, and reads spaceborne lidar data
+SpaceAltimetry.jl searches, downloads, and reads spaceborne lidar data
 from the ICESat, ICESat-2, and GEDI NASA missions. Granules are exposed as lazy
 [Tables.jl](https://github.com/JuliaData/Tables.jl)-compatible HDF5 tables, so
 you can inspect product data quickly and materialize only when you need to.
@@ -23,14 +23,14 @@ you can inspect product data quickly and materialize only when you need to.
 
 ```julia
 import Pkg
-Pkg.add("SpaceLiDAR")
+Pkg.add("SpaceAltimetry")
 ```
 
 ## Search and download
 
 ```julia
 using Extents
-using SpaceLiDAR
+using SpaceAltimetry
 
 vietnam = Extent(X = (102.0, 107.0), Y = (8.0, 12.0))
 
@@ -43,14 +43,14 @@ download!(granules[1], "data")
 
 # Local files and folders can be opened directly.
 g = granule(joinpath("data", granules[1].id))
-gs = SpaceLiDAR.granules("data")
+gs = SpaceAltimetry.granules("data")
 ```
 
 ## Read as a lazy table
 
 ```julia
 using DataFrames
-using SpaceLiDAR
+using SpaceAltimetry
 
 g = granule("ATL08_20201121151145_08920913_006_01.h5")
 t = table(g)
@@ -69,7 +69,7 @@ Select tracks or variables at read time:
 ```julia
 t = table(g; tracks = ["gt1l", "gt1r"])
 
-vars = SpaceLiDAR.default_variables(g)
+vars = SpaceAltimetry.default_variables(g)
 push!(vars, Variable(:slope, "land_segments/terrain/h_te_slope", Float32))
 t = table(g; variables = vars)
 ```
@@ -83,13 +83,13 @@ t = explore(g)
 ## Chain filters and transforms
 
 Operations declare the columns they need from the HDF5 file. When piped from a lazy table, they
-stay lazy until the final materializing sink, so SpaceLiDAR can auto-pull all
+stay lazy until the final materializing sink, so SpaceAltimetry can auto-pull all
 required HDF5 columns before reading:
 
 ```julia
 using DataFrames
 using Extents
-using SpaceLiDAR
+using SpaceAltimetry
 
 g = granule("GLAH14_634_1102_001_0071_0_01_0001.H5")
 greenland = Extent(X = (-75.0, -10.0), Y = (58.0, 84.0))
@@ -105,7 +105,7 @@ df = table(g) |>
 
 ## More documentation
 
-See the [online documentation](https://evetion.github.io/SpaceLiDAR.jl/dev) for
+See the [online documentation](https://evetion.github.io/SpaceAltimetry.jl/dev) for
 guides on downloads, track selection, custom variables, and product-specific
-schemas. If you use SpaceLiDAR.jl in your research, please consider
+schemas. If you use SpaceAltimetry.jl in your research, please consider
 [citing it](https://zenodo.org/badge/latestdoi/241095197).
