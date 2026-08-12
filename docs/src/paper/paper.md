@@ -1,8 +1,9 @@
 ---
-title: 'SpaceAltimetry.jl: A Julia package for working with ICESat, ICESat-2, and GEDI data'
+title: 'SpaceAltimetry.jl: A Julia package for working with NASA satellite (laser) altimetry data'
 tags:
   - Julia
   - lidar
+  - altimetry
   - ICESat
   - ICESat-2
   - GEDI
