@@ -7,7 +7,7 @@
 
 # SpaceAltimetry
 
-SpaceAltimetry.jl searches, downloads, and reads spaceborne lidar data
+SpaceAltimetry.jl (previously SpaceLiDAR.jl) searches, downloads, and reads spaceborne lidar altimetry data
 from the ICESat, ICESat-2, and GEDI NASA missions. Granules are exposed as lazy
 [Tables.jl](https://github.com/JuliaData/Tables.jl)-compatible HDF5 tables, so
 you can inspect product data quickly and materialize only when you need to.
@@ -96,9 +96,9 @@ greenland = Extent(X = (-75.0, -10.0), Y = (58.0, 84.0))
 
 df = table(g) |>
     InExtent(greenland) |>
-    ICESatQuality() |>
-    SaturationCorrect() |>
-    TopexToWGS84() |>
+    ICESat.Quality() |>
+    ICESat.SaturationCorrect() |>
+    ICESat.TopexToWGS84() |>
     ToEGM2008() |>
     DataFrame
 ```

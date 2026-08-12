@@ -73,38 +73,14 @@ This reads `elev_highestreturn` / `lon_highestreturn` / `lat_highestreturn`.
 ## Quality Filtering
 
 ```julia
-df = DataFrame(t)
-
-# Basic quality (matches quality_flag):
-filter!(:quality => identity, df)
-
-# L3-style filtering:
-filter!(row -> row.quality && row.surface, df)
-# For sensitivity filtering (optional):
-filter!(row -> 0.9 < row.sensitivity <= 1.0, df)
+filtered = t |>
+    GEDI.Quality() |>
+    GEDI.Sensitivity(gt = 0.9) |>
+    collect
 ```
 
-For the full L3 filter (including algorithm-based zcross/toploc checks),
-you would need to read additional variables:
-
-```julia
-vars = [SpaceAltimetry.default_variables(g)...,
-    Variable(:selected_algorithm, "selected_algorithm", UInt8),
-    Variable(:rx_assess_quality_flag, "rx_assess/quality_flag", UInt8),
-    Variable(:degrade_flag, "degrade_flag", UInt8),
-    Variable(:stale_return_flag, "geolocation/stale_return_flag", UInt8),
-    Variable(:rx_maxamp, "rx_assess/rx_maxamp", Float32),
-    Variable(:sd_corrected, "rx_assess/sd_corrected", Float32),
-]
-t = table(g; variables=vars)
-df = DataFrame(t)
-
-# Apply L3 criteria:
-filter!(df) do row
-    row.rx_assess_quality_flag != 0 &&
-    row.surface &&
-    row.stale_return_flag == 0 &&
-    row.degrade_flag == 0 &&
-    row.rx_maxamp / row.sd_corrected >= 8
-end
-```
+The [`GEDI.Quality`](@ref) filter auto-loads the receive assessment,
+stale/degrade, amplitude, and selected algorithm fields required by the full
+[`points`](@ref)`(g; filtered=true)` predicate. The optional
+[`GEDI.Sensitivity`](@ref) filter keeps `gt < sensitivity <= 1.0`; `gt`
+defaults to `0.9`.

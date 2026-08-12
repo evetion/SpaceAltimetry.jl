@@ -99,15 +99,32 @@ end
 # sourceless ICESat-derived table). Applying these to a non-ICESat granule hits
 # the default `inputs` method, which throws an applicability error. Inputs are
 # declared as self-contained `Variable()` specs; GLAH06/GLAH14 share these paths
-# (the per-product difference is the attitude *column name*, see
-# `_attitude_variable` in GLAH06.jl/GLAH14.jl).
+# (the per-product difference is the attitude column name).
+
+module ICESat
+
+using Tables: Tables
+using ..SpaceAltimetry:
+    Filter,
+    Transform,
+    ICESat_Granule,
+    Variable,
+    _colnames,
+    _namevar,
+    icesat_quality,
+    icesat_saturation_correct!,
+    topex_to_wgs84!,
+    topex_to_wgs84_ellipsoid
+import ..SpaceAltimetry: _inputs, _mask, _run!
+
+export Quality, SaturationCorrect, TopexToWGS84
 
 """
     TopexToWGS84()
 
 Transform: convert ICESat (GLAH06/GLAH14) TOPEX/Poseidon ellipsoid `:height`
 (and `:height_reference` if present) to WGS84. Equivalent to
-[`topex_to_wgs84`](@ref).
+[`topex_to_wgs84!`](@ref).
 """
 struct TopexToWGS84 <: Transform end
 _inputs(::TopexToWGS84, ::Union{ICESat_Granule,Nothing}) = [
@@ -130,7 +147,7 @@ end
     SaturationCorrect()
 
 Transform: add `:saturation_correction` to `:height` (ICESat). Equivalent to
-[`icesat_saturation_correct`](@ref).
+[`icesat_saturation_correct!`](@ref).
 """
 struct SaturationCorrect <: Transform end
 _inputs(::SaturationCorrect, ::Union{ICESat_Granule,Nothing}) = [
@@ -143,14 +160,14 @@ _run!(::SaturationCorrect, cols) = icesat_saturation_correct!(
 )
 
 """
-    ICESatQuality()
+    Quality()
 
 Filter: keep only high-quality ICESat (GLAH06/GLAH14) returns following Smith
 et al. (2020). The product-specific attitude column is selected by dispatch
 (`:sigma_att_flg` for GLAH06, `:attitude` for GLAH14). See [`icesat_quality`](@ref).
 """
-struct ICESatQuality <: Filter end
-function _inputs(::ICESatQuality, g::ICESat_Granule)
+struct Quality <: Filter end
+function _inputs(::Quality, g::ICESat_Granule)
     [
         Variable(:elev_use_flg, "Data_40HZ/Quality/elev_use_flg", Int8),
         _attitude_variable(g),
@@ -158,9 +175,9 @@ function _inputs(::ICESatQuality, g::ICESat_Granule)
         Variable(:saturation_correction, "Data_40HZ/Elevation_Corrections/d_satElevCorr", Float64),
     ]
 end
-_inputs(::ICESatQuality, ::Nothing) =
+_inputs(::Quality, ::Nothing) =
     [_namevar(:elev_use_flg), _namevar(:i_numPk), _namevar(:saturation_correction)]
-function _mask(::ICESatQuality, cols)
+function _mask(::Quality, cols)
     names = _colnames(cols)
     att_col = :attitude in names ? :attitude :
               :sigma_att_flg in names ? :sigma_att_flg : nothing
@@ -170,3 +187,10 @@ function _mask(::ICESatQuality, cols)
     sc = :saturation_correction in names ? Tables.getcolumn(cols, :saturation_correction) : nothing
     return icesat_quality(elev, att, npk, sc)
 end
+
+_attitude_variable(::ICESat_Granule{:GLAH06}) =
+    Variable(:sigma_att_flg, "Data_40HZ/Quality/sigma_att_flg", Int8)
+_attitude_variable(::ICESat_Granule{:GLAH14}) =
+    Variable(:attitude, "Data_40HZ/Quality/sigma_att_flg", Int8)
+
+end # module ICESat

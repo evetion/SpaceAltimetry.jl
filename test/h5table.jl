@@ -754,12 +754,12 @@ end
         ext = Extent(X = (170.0, 180.0), Y = (-90.0, -85))
 
         # Eager chaining materializes after the first op and cannot auto-pull later inputs.
-        @test_throws ArgumentError filter(ICESatQuality(), map(SaturationCorrect(), t))
+        @test_throws ArgumentError filter(ICESat.Quality(), map(ICESat.SaturationCorrect(), t))
 
         df = (t |>
-              SaturationCorrect() |>
+              ICESat.SaturationCorrect() |>
               InExtent(ext) |>
-              ICESatQuality() |>
+              ICESat.Quality() |>
               DataFrame)
         @test nrow(df) == 478
         @test df.height[1] == 2257.6730000000002
@@ -776,19 +776,66 @@ end
         close(t)
     end
 
-    @testset "product-aware ICESatQuality" begin
+    @testset "mission operation modules" begin
+        @test Set((:Quality, :SaturationCorrect, :TopexToWGS84)) ⊆ Set(names(ICESat))
+        @test :Quality in names(ICESat2)
+        @test Set((:Quality, :Sensitivity)) ⊆ Set(names(GEDI))
+    end
+
+    @testset "product-aware ICESat.Quality" begin
         g14 = SL.granule(GLAH14_fn)
         # the attitude column is selected by granule dispatch in `inputs`
-        @test any(v -> v.name === :attitude, SL._inputs(ICESatQuality(), g14))
+        @test any(v -> v.name === :attitude, SL._inputs(ICESat.Quality(), g14))
         g6 = SL.granule(GLAH06_fn)
-        @test any(v -> v.name === :sigma_att_flg, SL._inputs(ICESatQuality(), g6))
+        @test any(v -> v.name === :sigma_att_flg, SL._inputs(ICESat.Quality(), g6))
 
         t = SL.table(g14)
-        f = filter(ICESatQuality(), t)
+        f = filter(ICESat.Quality(), t)
         @test f isa SL.Table
         @test length(f.height) < DataAPI.nrow(t)
         # mask agrees with the legacy function
         @test count(SL.icesat_quality(t)) == length(f.height)
+    end
+
+    @testset "ICESat2.Quality" begin
+        for filename in (ATL03_fn, ATL06_fn, ATL08_fn)
+            g = SL.granule(filename)
+            t = SL.table(g; tracks = ["gt1l"])
+            quality = Tables.getcolumn(t, :quality)
+            expected = count(quality) do value
+                !ismissing(value) && (
+                    value isa Bool ? value :
+                    value isa Number ? iszero(value) : value == "nominal"
+                )
+            end
+            f = filter(ICESat2.Quality(), t)
+            @test length(f.height) == expected
+            close(t)
+        end
+
+        t12 = SL.table(SL.granule(ATL12_fn); tracks = ["gt1l"])
+        @test_throws ArgumentError filter(ICESat2.Quality(), t12)
+        close(t12)
+    end
+
+    @testset "GEDI.Quality" begin
+        g = SL.granule(GEDI02_fn)
+        track = ["BEAM0000"]
+        t = SL.table(g; tracks = track)
+        filtered = filter(GEDI.Quality(), t)
+        legacy = SL.points(g; tracks = track, filtered = true)
+        @test length(filtered.height) == length(legacy.height)
+
+        sensitive = filter(GEDI.Sensitivity(), filtered)
+        @test length(sensitive.height) <= length(filtered.height)
+        @test all(x -> 0.9 < x <= 1, sensitive.sensitivity)
+
+        stricter = collect(t |> GEDI.Quality() |> GEDI.Sensitivity(gt = 0.95))
+        @test all(x -> 0.95 < x <= 1, stricter.sensitivity)
+
+        @test_throws ArgumentError GEDI.Sensitivity(-0.1)
+        @test_throws ArgumentError GEDI.Sensitivity(gt = 1.0)
+        close(t)
     end
 
     @testset "partitioned map" begin
@@ -818,11 +865,11 @@ end
         g = SL.granule(GLAH14_fn)
         mt = collect(SL.table(g))
         s0 = sum(skipmissing(mt.height))
-        map!(SaturationCorrect(), mt)
+        map!(ICESat.SaturationCorrect(), mt)
         @test sum(skipmissing(mt.height)) != s0
 
         n0 = length(mt.height)
-        filter!(ICESatQuality(), mt)
+        filter!(ICESat.Quality(), mt)
         @test length(mt.height) < n0
     end
 
@@ -833,10 +880,10 @@ end
         # wrong verb for the kind of op → no method (filter wants a Filter, map a Transform)
         g = SL.granule(GLAH14_fn)
         @test_throws MethodError filter(ToEGM2008(), SL.table(g))
-        @test_throws MethodError map(ICESatQuality(), SL.table(g))
+        @test_throws MethodError map(ICESat.Quality(), SL.table(g))
         # product-bound op on a non-ICESat granule → applicability error
         gedi = SL.granule(GEDI02_fn)
-        @test_throws ArgumentError map(TopexToWGS84(), SL.table(gedi))
-        @test_throws ArgumentError filter(ICESatQuality(), SL.table(gedi))
+        @test_throws ArgumentError map(ICESat.TopexToWGS84(), SL.table(gedi))
+        @test_throws ArgumentError filter(ICESat.Quality(), SL.table(gedi))
     end
 end
