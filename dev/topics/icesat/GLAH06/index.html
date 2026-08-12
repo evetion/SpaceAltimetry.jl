@@ -1931,7 +1931,7 @@ package if you use it in production.
 <h2 id="coordinate-system">Coordinate System<a class="headerlink" href="#coordinate-system" title="Permanent link">&para;</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">TOPEX/Poseidon ellipsoid</p>
-<p>ICESat data uses the TOPEX/Poseidon ellipsoid, NOT WGS84. Call <code>topex_to_wgs84!(df)</code> to convert heights to WGS84.</p>
+<p>ICESat data uses the TOPEX/Poseidon ellipsoid, NOT WGS84. Call <a href="../../../reference/api/#SpaceAltimetry.topex_to_wgs84!"><code>topex_to_wgs84!</code></a><code>(df)</code> to convert heights to WGS84.</p>
 </div>
 <p>Heights must be corrected for saturation <em>before</em> reprojection:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">table</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>

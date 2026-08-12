@@ -1669,6 +1669,24 @@ package if you use it in production.
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1685,6 +1703,47 @@ package if you use it in production.
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mission-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mission operations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#icesat-helpers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ICESat helpers
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1775,20 +1834,156 @@ package if you use it in production.
 <p><a id='API-reference'></a></p>
 <p><a id='API-reference-1'></a></p>
 <h1 id="api-reference">API reference<a class="headerlink" href="#api-reference" title="Permanent link">&para;</a></h1>
+<p><a id='Mission-operations'></a></p>
+<p><a id='Mission-operations-1'></a></p>
+<h2 id="mission-operations">Mission operations<a class="headerlink" href="#mission-operations" title="Permanent link">&para;</a></h2>
+<p><a id='SpaceAltimetry.ICESat.Quality' href='#SpaceAltimetry.ICESat.Quality'>#</a>
+<strong><code>SpaceAltimetry.ICESat.Quality</code></strong> &mdash; <em>Type</em>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">Quality</span><span class="p">()</span>
+</code></pre></div>
+<p>Filter: keep only high-quality ICESat (GLAH06/GLAH14) returns following Smith et al. (2020). The product-specific attitude column is selected by dispatch (<code>:sigma_att_flg</code> for GLAH06, <code>:attitude</code> for GLAH14). See <a href="./#SpaceAltimetry.icesat_quality"><code>icesat_quality</code></a>.</p>
+<p><a target='_blank' href='https://github.com/evetion/SpaceAltimetry.jl/blob/82257841479832dc7ed89cd6bf6c724ebccac6d1/src/ICESat/ICESat.jl#LL162-L168' class='documenter-source'>source</a><br></p>
+<p><a id='SpaceAltimetry.ICESat.SaturationCorrect' href='#SpaceAltimetry.ICESat.SaturationCorrect'>#</a>
+<strong><code>SpaceAltimetry.ICESat.SaturationCorrect</code></strong> &mdash; <em>Type</em>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">SaturationCorrect</span><span class="p">()</span>
+</code></pre></div>
+<p>Transform: add <code>:saturation_correction</code> to <code>:height</code> (ICESat). Equivalent to <a href="./#SpaceAltimetry.icesat_saturation_correct!"><code>icesat_saturation_correct!</code></a>.</p>
+<p><a target='_blank' href='https://github.com/evetion/SpaceAltimetry.jl/blob/82257841479832dc7ed89cd6bf6c724ebccac6d1/src/ICESat/ICESat.jl#LL146-L151' class='documenter-source'>source</a><br></p>
+<p><a id='SpaceAltimetry.ICESat.TopexToWGS84' href='#SpaceAltimetry.ICESat.TopexToWGS84'>#</a>
+<strong><code>SpaceAltimetry.ICESat.TopexToWGS84</code></strong> &mdash; <em>Type</em>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">TopexToWGS84</span><span class="p">()</span>
+</code></pre></div>
+<p>Transform: convert ICESat (GLAH06/GLAH14) TOPEX/Poseidon ellipsoid <code>:height</code> (and <code>:height_reference</code> if present) to WGS84. Equivalent to <a href="./#SpaceAltimetry.topex_to_wgs84!"><code>topex_to_wgs84!</code></a>.</p>
+<p><a target='_blank' href='https://github.com/evetion/SpaceAltimetry.jl/blob/82257841479832dc7ed89cd6bf6c724ebccac6d1/src/ICESat/ICESat.jl#LL122-L128' class='documenter-source'>source</a><br></p>
+<p><a id='SpaceAltimetry.ICESat2.Quality' href='#SpaceAltimetry.ICESat2.Quality'>#</a>
+<strong><code>SpaceAltimetry.ICESat2.Quality</code></strong> &mdash; <em>Type</em>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">Quality</span><span class="p">()</span>
+</code></pre></div>
+<p>Filter ICESat-2 rows using the quality field exposed by the point methods. ATL03 keeps nominal photons (<code>quality_ph == 0</code>); ATL06 and ATL08 keep rows whose product quality summary is true.</p>
+<p><a target='_blank' href='https://github.com/evetion/SpaceAltimetry.jl/blob/82257841479832dc7ed89cd6bf6c724ebccac6d1/src/ICESat-2/ICESat-2.jl#LL190-L196' class='documenter-source'>source</a><br></p>
+<p><a id='SpaceAltimetry.GEDI.Quality' href='#SpaceAltimetry.GEDI.Quality'>#</a>
+<strong><code>SpaceAltimetry.GEDI.Quality</code></strong> &mdash; <em>Type</em>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">Quality</span><span class="p">()</span>
+</code></pre></div>
+<p>Filter GEDI L2A rows using the criteria by <sup id="fnref:l3"><a class="footnote-ref" href="#fn:l3">1</a></sup>, except for the sensitivity field, which can be manually filtered to be above 0.9 and below or equal to 1.0 to match<sup id="fnref2:l3"><a class="footnote-ref" href="#fn:l3">1</a></sup>.</p>
+<p>The filter auto-loads the following datasets:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Dataset</th>
+<th style="text-align: left;">Required value</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>rx_assess/quality_flag</code></td>
+<td style="text-align: left;">nonzero</td>
+<td style="text-align: left;">Receive waveform passed basic assessment</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>surface_flag</code></td>
+<td style="text-align: left;">nonzero</td>
+<td style="text-align: left;">Lowest detected mode is within 300 m of the reference surface</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>geolocation/stale_return_flag</code></td>
+<td style="text-align: left;">zero</td>
+<td style="text-align: left;">Geolocation does not use a stale return</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>rx_assess/rx_maxamp / rx_assess/sd_corrected</code></td>
+<td style="text-align: left;">at least 8</td>
+<td style="text-align: left;">Return amplitude is sufficiently above noise</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>degrade_flag</code></td>
+<td style="text-align: left;">zero</td>
+<td style="text-align: left;">Instrument was not in a degraded state</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>selected_algorithm</code></td>
+<td style="text-align: left;">1 through 6</td>
+<td style="text-align: left;">Identifies the waveform algorithm used for this shot</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>rx_processing_aN/rx_algrunflag</code></td>
+<td style="text-align: left;">nonzero</td>
+<td style="text-align: left;">The selected algorithm ran successfully</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>rx_processing_aN/zcross</code></td>
+<td style="text-align: left;">greater than zero</td>
+<td style="text-align: left;">The selected algorithm found a valid lower threshold crossing</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>rx_processing_aN/toploc</code></td>
+<td style="text-align: left;">greater than zero</td>
+<td style="text-align: left;">The selected algorithm found a valid waveform top</td>
+</tr>
+</tbody>
+</table>
+<p>For the final three checks, <code>N</code> is chosen independently for each row from <code>selected_algorithm</code>; fields for all six algorithms are loaded so mixed algorithm selections can be filtered in one pass. Missing values, invalid algorithm numbers, and failed criteria reject the row.</p>
+<p>Sensitivity is intentionally separate; compose this filter with <a href="./#SpaceAltimetry.GEDI.Sensitivity"><code>Sensitivity</code></a> when needed.</p>
+<p><a target='_blank' href='https://github.com/evetion/SpaceAltimetry.jl/blob/82257841479832dc7ed89cd6bf6c724ebccac6d1/src/GEDI/GEDI.jl#LL99-L127' class='documenter-source'>source</a><br></p>
+<p><a id='SpaceAltimetry.GEDI.Sensitivity' href='#SpaceAltimetry.GEDI.Sensitivity'>#</a>
+<strong><code>SpaceAltimetry.GEDI.Sensitivity</code></strong> &mdash; <em>Type</em>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">Sensitivity</span><span class="p">([</span><span class="n">gt</span><span class="o">=</span><span class="mf">0.9</span><span class="p">])</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">Sensitivity</span><span class="p">(;</span><span class="w"> </span><span class="n">gt</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+</code></pre></div>
+<p>Filter GEDI L2A rows to <code>gt &lt; sensitivity &lt;= 1.0</code>. GEDI sensitivity is stored on a 0-1 scale; values outside that range and missing values are rejected.</p>
+<p><a target='_blank' href='https://github.com/evetion/SpaceAltimetry.jl/blob/82257841479832dc7ed89cd6bf6c724ebccac6d1/src/GEDI/GEDI.jl#LL225-L231' class='documenter-source'>source</a><br></p>
+<p><a id='ICESat-helpers'></a></p>
+<p><a id='ICESat-helpers-1'></a></p>
+<h2 id="icesat-helpers">ICESat helpers<a class="headerlink" href="#icesat-helpers" title="Permanent link">&para;</a></h2>
+<p><a id='SpaceAltimetry.topex_to_wgs84!' href='#SpaceAltimetry.topex_to_wgs84!'>#</a>
+<strong><code>SpaceAltimetry.topex_to_wgs84!</code></strong> &mdash; <em>Function</em>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">topex_to_wgs84!</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">topex_to_wgs84</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</code></pre></div>
+<p>Convert ICESat coordinates from the TOPEX/Poseidon ellipsoid to WGS84. Transforms <code>:height</code> (and <code>:height_reference</code> if present). Latitude/longitude differences are below instrument precision (~1e-6°) and are not modified.</p>
+<p>If <code>t</code> carries <code>"GEOINTERFACE:crs"</code> metadata equal to <code>EPSG(4979)</code> (or already in EGM2008), the projection is skipped — applying it twice would corrupt heights. After a successful projection, the new CRS is written to <code>t</code>'s metadata if writable.</p>
+<p>Only meaningful for ICESat granules (GLAH06/GLAH14). Rows with missing inputs are left untouched.</p>
+<p><a target='_blank' href='https://github.com/evetion/SpaceAltimetry.jl/blob/82257841479832dc7ed89cd6bf6c724ebccac6d1/src/geoid.jl#LL155-L170' class='documenter-source'>source</a><br></p>
+<p><a id='SpaceAltimetry.icesat_saturation_correct!' href='#SpaceAltimetry.icesat_saturation_correct!'>#</a>
+<strong><code>SpaceAltimetry.icesat_saturation_correct!</code></strong> &mdash; <em>Function</em>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">icesat_saturation_correct!</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">icesat_saturation_correct</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</code></pre></div>
+<p>Add <code>:saturation_correction</code> to <code>:height</code>. Missing corrections (the original ICESat fill sentinel, mapped to <code>missing</code> by <code>table()</code>) leave the height untouched. Missing heights stay missing because <code>missing + x === missing</code>.</p>
+<p>Only meaningful for ICESat granules (GLAH06/GLAH14). Call before <code>topex_to_wgs84!</code>.</p>
+<p><a target='_blank' href='https://github.com/evetion/SpaceAltimetry.jl/blob/82257841479832dc7ed89cd6bf6c724ebccac6d1/src/geoid.jl#LL204-L214' class='documenter-source'>source</a><br></p>
+<p><a id='SpaceAltimetry.icesat_quality' href='#SpaceAltimetry.icesat_quality'>#</a>
+<strong><code>SpaceAltimetry.icesat_quality</code></strong> &mdash; <em>Function</em>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">icesat_quality</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">BitVector</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">icesat_quality</span><span class="p">(</span><span class="n">elev_use_flg</span><span class="p">,</span><span class="w"> </span><span class="n">sigma_att_flg_or_nothing</span><span class="p">,</span><span class="w"> </span><span class="n">i_numPk_or_nothing</span><span class="p">,</span><span class="w"> </span><span class="n">saturation_correction_or_nothing</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">BitVector</span>
+</code></pre></div>
+<p>Compute the ICESat quality mask following Smith et al. (2020)<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">2</a></sup>:</p>
 <ul>
+<li><code>elev_use_flg == "valid"</code>  (HDF5 flag value 0)</li>
+<li><code>sigma_att_flg == "good"</code>  (or <code>:attitude</code> for GLAH14)</li>
+<li><code>i_numPk == 1</code></li>
+<li><code>saturation_correction &lt; 3</code></li>
+</ul>
+<p>Missing values map to <code>false</code>. Returns a fresh <code>BitVector</code> suitable for filtering (e.g. <code>t.height[icesat_quality(t)]</code>). Pass <code>nothing</code> for any optional column to skip that predicate.</p>
+<p><a target='_blank' href='https://github.com/evetion/SpaceAltimetry.jl/blob/82257841479832dc7ed89cd6bf6c724ebccac6d1/src/geoid.jl#LL242-L259' class='documenter-source'>source</a><br></p>
+<ul>
+<li><a href="./#SpaceAltimetry.GEDI.Quality"><code>SpaceAltimetry.GEDI.Quality</code></a></li>
+<li><a href="./#SpaceAltimetry.GEDI.Sensitivity"><code>SpaceAltimetry.GEDI.Sensitivity</code></a></li>
 <li><a href="../granules/#SpaceAltimetry.GEDI_Granule"><code>SpaceAltimetry.GEDI_Granule</code></a></li>
+<li><a href="./#SpaceAltimetry.ICESat.Quality"><code>SpaceAltimetry.ICESat.Quality</code></a></li>
+<li><a href="./#SpaceAltimetry.ICESat.SaturationCorrect"><code>SpaceAltimetry.ICESat.SaturationCorrect</code></a></li>
+<li><a href="./#SpaceAltimetry.ICESat.TopexToWGS84"><code>SpaceAltimetry.ICESat.TopexToWGS84</code></a></li>
+<li><a href="./#SpaceAltimetry.ICESat2.Quality"><code>SpaceAltimetry.ICESat2.Quality</code></a></li>
 <li><a href="../granules/#SpaceAltimetry.ICESat2_Granule"><code>SpaceAltimetry.ICESat2_Granule</code></a></li>
-<li><a href="../granules/#SpaceAltimetry.ICESatQuality"><code>SpaceAltimetry.ICESatQuality</code></a></li>
 <li><a href="../granules/#SpaceAltimetry.ICESat_Granule"><code>SpaceAltimetry.ICESat_Granule</code></a></li>
-<li><a href="../granules/#SpaceAltimetry.SaturationCorrect"><code>SpaceAltimetry.SaturationCorrect</code></a></li>
 <li><a href="../utilities/#SpaceAltimetry.ToEGM2008"><code>SpaceAltimetry.ToEGM2008</code></a></li>
-<li><a href="../granules/#SpaceAltimetry.TopexToWGS84"><code>SpaceAltimetry.TopexToWGS84</code></a></li>
 <li><a href="../granules/#Base.Filesystem.rm-Tuple{SpaceAltimetry.Granule}"><code>Base.Filesystem.rm</code></a></li>
 <li><a href="../granules/#Base.convert-Union{Tuple{T}, Tuple{Symbol, ICESat2_Granule{T}}} where T"><code>Base.convert</code></a></li>
 <li><a href="../utilities/#SpaceAltimetry.angle!-Tuple{Any}"><code>SpaceAltimetry.angle!</code></a></li>
 <li><a href="../data/#SpaceAltimetry.atl08_canopy_variables"><code>SpaceAltimetry.atl08_canopy_variables</code></a></li>
-<li><a href="../data/#SpaceAltimetry.bounds-Tuple{GEDI_Granule}"><code>SpaceAltimetry.bounds</code></a></li>
 <li><a href="../granules/#SpaceAltimetry.bounds-Tuple{ICESat2_Granule}"><code>SpaceAltimetry.bounds</code></a></li>
+<li><a href="../data/#SpaceAltimetry.bounds-Tuple{GEDI_Granule}"><code>SpaceAltimetry.bounds</code></a></li>
 <li><a href="../data/#SpaceAltimetry.classify"><code>SpaceAltimetry.classify</code></a></li>
 <li><a href="../granules/#SpaceAltimetry.download"><code>SpaceAltimetry.download</code></a></li>
 <li><a href="../granules/#SpaceAltimetry.download"><code>SpaceAltimetry.download</code></a></li>
@@ -1798,23 +1993,25 @@ package if you use it in production.
 <li><a href="../data/#SpaceAltimetry.gedi_l2a_canopy_variables"><code>SpaceAltimetry.gedi_l2a_canopy_variables</code></a></li>
 <li><a href="../utilities/#SpaceAltimetry.granule-Tuple{AbstractString}"><code>SpaceAltimetry.granule</code></a></li>
 <li><a href="../utilities/#SpaceAltimetry.granules-Tuple{AbstractString}"><code>SpaceAltimetry.granules</code></a></li>
+<li><a href="./#SpaceAltimetry.icesat_quality"><code>SpaceAltimetry.icesat_quality</code></a></li>
 <li><a href="../utilities/#SpaceAltimetry.icesat_quality-Tuple{Any}"><code>SpaceAltimetry.icesat_quality</code></a></li>
 <li><a href="../utilities/#SpaceAltimetry.icesat_saturation_correct"><code>SpaceAltimetry.icesat_saturation_correct</code></a></li>
+<li><a href="./#SpaceAltimetry.icesat_saturation_correct!"><code>SpaceAltimetry.icesat_saturation_correct!</code></a></li>
 <li><a href="../utilities/#SpaceAltimetry.icesat_saturation_correct!-Tuple{Any}"><code>SpaceAltimetry.icesat_saturation_correct!</code></a></li>
 <li><a href="../utilities/#SpaceAltimetry.in_bbox-Tuple{DataFrames.DataFrame, @NamedTuple{min_x::Float64, min_y::Float64, max_x::Float64, max_y::Float64}}"><code>SpaceAltimetry.in_bbox</code></a></li>
+<li><a href="../granules/#SpaceAltimetry.info-Tuple{GEDI_Granule}"><code>SpaceAltimetry.info</code></a></li>
 <li><a href="../granules/#SpaceAltimetry.info-Tuple{ICESat_Granule}"><code>SpaceAltimetry.info</code></a></li>
 <li><a href="../granules/#SpaceAltimetry.info-Tuple{ICESat2_Granule}"><code>SpaceAltimetry.info</code></a></li>
-<li><a href="../granules/#SpaceAltimetry.info-Tuple{GEDI_Granule}"><code>SpaceAltimetry.info</code></a></li>
 <li><a href="../utilities/#SpaceAltimetry.instantiate-Union{Tuple{T}, Tuple{Vector{T}, AbstractString}} where T&lt;:SpaceAltimetry.Granule"><code>SpaceAltimetry.instantiate</code></a></li>
 <li><a href="../utilities/#SpaceAltimetry.isvalid-Tuple{SpaceAltimetry.Granule}"><code>SpaceAltimetry.isvalid</code></a></li>
 <li><a href="../data/#SpaceAltimetry.lines"><code>SpaceAltimetry.lines</code></a></li>
 <li><a href="../utilities/#SpaceAltimetry.netrc!-Tuple{Any, Any}"><code>SpaceAltimetry.netrc!</code></a></li>
-<li><a href="../data/#SpaceAltimetry.points-Tuple{ICESat2_Granule{:ATL06}}"><code>SpaceAltimetry.points</code></a></li>
-<li><a href="../data/#SpaceAltimetry.points-Tuple{ICESat2_Granule{:ATL03}}"><code>SpaceAltimetry.points</code></a></li>
 <li><a href="../data/#SpaceAltimetry.points-Tuple{ICESat2_Granule{:ATL08}}"><code>SpaceAltimetry.points</code></a></li>
-<li><a href="../data/#SpaceAltimetry.points-Tuple{ICESat_Granule{:GLAH14}}"><code>SpaceAltimetry.points</code></a></li>
 <li><a href="../data/#SpaceAltimetry.points-Tuple{ICESat_Granule{:GLAH06}}"><code>SpaceAltimetry.points</code></a></li>
 <li><a href="../data/#SpaceAltimetry.points"><code>SpaceAltimetry.points</code></a></li>
+<li><a href="../data/#SpaceAltimetry.points-Tuple{ICESat_Granule{:GLAH14}}"><code>SpaceAltimetry.points</code></a></li>
+<li><a href="../data/#SpaceAltimetry.points-Tuple{ICESat2_Granule{:ATL06}}"><code>SpaceAltimetry.points</code></a></li>
+<li><a href="../data/#SpaceAltimetry.points-Tuple{ICESat2_Granule{:ATL03}}"><code>SpaceAltimetry.points</code></a></li>
 <li><a href="../search/#SpaceAltimetry.search"><code>SpaceAltimetry.search</code></a></li>
 <li><a href="../utilities/#SpaceAltimetry.shift-NTuple{4, Any}"><code>SpaceAltimetry.shift</code></a></li>
 <li><a href="../granules/#SpaceAltimetry.sync"><code>SpaceAltimetry.sync</code></a></li>
@@ -1823,8 +2020,20 @@ package if you use it in production.
 <li><a href="../utilities/#SpaceAltimetry.to_egm2008!-Tuple{Any}"><code>SpaceAltimetry.to_egm2008!</code></a></li>
 <li><a href="../utilities/#SpaceAltimetry.topex_to_wgs84"><code>SpaceAltimetry.topex_to_wgs84</code></a></li>
 <li><a href="../utilities/#SpaceAltimetry.topex_to_wgs84!-Tuple{Any}"><code>SpaceAltimetry.topex_to_wgs84!</code></a></li>
+<li><a href="./#SpaceAltimetry.topex_to_wgs84!"><code>SpaceAltimetry.topex_to_wgs84!</code></a></li>
 <li><a href="../granules/#SpaceAltimetry.track_angle"><code>SpaceAltimetry.track_angle</code></a></li>
 </ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:l3">
+<p>Dubayah, R. O., S. B. Luthcke, T. J. Sabaka, J. B. Nicholas, S. Preaux, and M. A. Hofton. 2021. “GEDI L3 Gridded Land Surface Metrics, Version 2.” ORNL DAAC, November. https://doi.org/10.3334/ORNLDAAC/1952.&#160;<a class="footnote-backref" href="#fnref:l3" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:l3" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:1">
+<p>Smith, B., et al. (2020). Pervasive ice sheet mass loss reflects competing ocean and atmosphere processes. Science, 368(6496), 1239-1242.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
 
 
 

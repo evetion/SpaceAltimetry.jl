@@ -1826,6 +1826,7 @@ package if you use it in production.
 <p>GEDI—launched in 2018—is attached to the ISS and investigates global ecosystems<sup id="fnref:dub"><a class="footnote-ref" href="#fn:dub">1</a></sup>.</p>
 <p>We currently only support the L2A product (at version 2).</p>
 <p>See their <a href="https://gedi.umd.edu">website</a>.</p>
+<p>Use <a href="../../reference/api/#SpaceAltimetry.GEDI.Quality"><code>GEDI.Quality</code></a> with <code>filter</code> or in an operation pipeline to apply the full algorithm-aware L2A quality criteria used by <a href="../../reference/data/#SpaceAltimetry.points-Tuple{ICESat_Granule{:GLAH06}}"><code>points</code></a><code>(g; filtered=true)</code>. Apply <a href="../../reference/api/#SpaceAltimetry.GEDI.Sensitivity"><code>GEDI.Sensitivity</code></a> afterwards to retain returns above a sensitivity threshold.</p>
 <p><a id='Products'></a></p>
 <p><a id='Products-1'></a></p>
 <h2 id="products">Products<a class="headerlink" href="#products" title="Permanent link">&para;</a></h2>
