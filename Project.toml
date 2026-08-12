@@ -1,7 +1,7 @@
 name = "SpaceAltimetry"
 uuid = "b376ed10-97a3-45e5-b95c-f77367ad6fc2"
 authors = ["Maarten Pronk", "Alex Gardner"]
-version = "0.4.3"
+version = "0.5.0"
 
 [deps]
 AWSS3 = "1c724243-ef5b-51ab-93f4-b0a88ac62a95"
