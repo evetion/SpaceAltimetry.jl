@@ -13,6 +13,8 @@ using TimeZones: TimeZones, DateTime, UTC
 using Extents: Extents, Extent, extent
 import DataAPI
 
+const SpaceLiDAR = SpaceAltimetry
+
 include("granule.jl")
 include("utils.jl")
 include("geom.jl")
@@ -53,6 +55,7 @@ export Operation, Filter, Transform
 export ToEGM2008, TopexToWGS84, SaturationCorrect, ICESatQuality, InExtent
 export ICESat_Granule, ICESat2_Granule, GEDI_Granule, convert
 export granule, granules
+export SpaceLiDAR
 
 # include("precompile.jl")
 
