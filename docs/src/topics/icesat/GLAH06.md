@@ -56,7 +56,7 @@ vars_table(SpaceAltimetry.default_variables(g)) # hide
 
 !!! warning "TOPEX/Poseidon ellipsoid"
     ICESat data uses the TOPEX/Poseidon ellipsoid, NOT WGS84.
-    Call `topex_to_wgs84!(df)` to convert heights to WGS84.
+    Call [`topex_to_wgs84!`](@ref)`(df)` to convert heights to WGS84.
 
 Heights must be corrected for saturation *before* reprojection:
 

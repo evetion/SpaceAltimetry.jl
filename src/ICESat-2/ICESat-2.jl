@@ -178,3 +178,45 @@ end
 function is_blacklisted(g::Granule)
     id(g) in blacklist
 end
+
+module ICESat2
+
+using Tables: Tables
+using ..SpaceAltimetry: Filter, ICESat2_Granule, _namevar, _var
+import ..SpaceAltimetry: _inputs, _mask
+
+export Quality
+
+"""
+    Quality()
+
+Filter ICESat-2 rows using the quality field exposed by the point methods.
+ATL03 keeps nominal photons (`quality_ph == 0`); ATL06 and ATL08 keep rows
+whose product quality summary is true.
+"""
+struct Quality <: Filter end
+
+const QualityGranule = Union{
+    ICESat2_Granule{:ATL03},
+    ICESat2_Granule{:ATL06},
+    ICESat2_Granule{:ATL08},
+}
+
+_inputs(::Quality, g::QualityGranule) = [_var(g, :quality)]
+_inputs(::Quality, ::Nothing) = [_namevar(:quality)]
+
+_is_good_quality(::Missing) = false
+_is_good_quality(value::Bool) = value
+_is_good_quality(value::Number) = iszero(value)
+_is_good_quality(value) = value == "nominal"
+
+function _mask(::Quality, cols)
+    quality = Tables.getcolumn(cols, :quality)
+    mask = BitVector(undef, length(quality))
+    @inbounds for i in eachindex(quality)
+        mask[i] = _is_good_quality(quality[i])
+    end
+    return mask
+end
+
+end # module ICESat2
