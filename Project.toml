@@ -1,7 +1,7 @@
 name = "SpaceAltimetry"
 uuid = "b376ed10-97a3-45e5-b95c-f77367ad6fc2"
-authors = ["Maarten Pronk", "Alex Gardner"]
 version = "0.5.0"
+authors = ["Maarten Pronk", "Alex Gardner"]
 
 [deps]
 AWSS3 = "1c724243-ef5b-51ab-93f4-b0a88ac62a95"
@@ -43,16 +43,16 @@ CategoricalArrays = "^0.9, 0.10, 1"
 DataAPI = "1"
 DataFrames = "1"
 Dates = "1"
-ExplicitImports = "1.15"
 Distances = "^0.10"
 Downloads = "1"
+ExplicitImports = "1.15"
 Extents = "^0.1"
 FillArrays = "0.2, 1"
 FoldingTrees = "1"
 GeoFormatTypes = "0.4"
 GeoInterface = "1"
 HDF5 = "^0.15, 0.16, 0.17"
-HTTP = "0.9, 1"
+HTTP = "0.9, 1, 2"
 JSON3 = "1"
 Makie = "0.24"
 Printf = "1"
@@ -69,9 +69,9 @@ julia = "1.10"
 [extras]
 Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
-ExplicitImports = "7d51a73a-1435-4ff3-83d9-f097790105c7"
 Distances = "b4f34e82-e78d-54a5-968a-f98e89d6e8f7"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+ExplicitImports = "7d51a73a-1435-4ff3-83d9-f097790105c7"
 MozillaCACerts_jll = "14a3606d-f60d-562e-9121-12d972cd8159"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
