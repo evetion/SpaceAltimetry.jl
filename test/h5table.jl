@@ -87,6 +87,24 @@ using SpaceAltimetry.H5Tables: H5Table, explore, get_dimensions, get_references,
         end
     end
 
+    @testset "multi-dimensional flag variable" begin
+        # subset_te_flag (5×998) has flag_values -1/0/1 and _FillValue 127,
+        # so it becomes a categorical with `missing` for the fill values.
+        h5open(ATL08_fn, "r") do h5
+            path = "gt1l/land_segments/terrain/subset_te_flag"
+            table = H5Table(h5,
+                vars = [:subset_te_flag => path, :latitude => "gt1l/land_segments/latitude"],
+                include_dimensions = true,
+            )
+            col = Tables.getcolumn(table, :subset_te_flag)
+            raw = vec(read(h5[path]))
+            @test col isa CategoricalVector
+            @test length(col) == nrow(table) == length(raw)
+            @test count(ismissing, col) == count(∉((-1, 0, 1)), raw)
+            @test all(isequal.(col[raw .== 1], "terrain_photons_present_within_geosegment"))
+        end
+    end
+
     @testset "include_references" begin
         h5open(ATL08_fn, "r") do h5
             table = H5Table(h5,
