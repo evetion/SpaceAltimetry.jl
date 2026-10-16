@@ -643,7 +643,13 @@ function make_variable(file, name::Symbol, path::AbstractString, flat = (inner =
         meanings = string.(split(flag_meanings))
         pool = CategoricalArrays.CategoricalPool(meanings)
         value_to_ref = Dict(fv => UInt32(i) for (i, fv) in enumerate(flag_values))
-        f = x -> CategoricalArray{String,1}(UInt32[get(value_to_ref, v, UInt32(0)) for v in x], pool)
+        f = function (x)
+            # Values outside `flag_values` (e.g. `_FillValue`) get ref 0, which is
+            # `missing` in CategoricalArrays, so only then allow missing in the eltype.
+            refs = UInt32[get(value_to_ref, v, UInt32(0)) for v in x]
+            T = any(iszero, refs) ? Union{Missing,String} : String
+            CategoricalArray{T,ndims(x)}(refs, pool)
+        end
     else
         mask = build_mask(ds)
         resolved = resolve_transform(transform, file, path)
