@@ -54,6 +54,11 @@ empty_extent = convert(Extent, empty_bbox)
             SpaceAltimetry;
             deps_compat = (; check_extras = false),
             piracies = (; treat_as_own = [Extents.Extent]),
+            # Aqua >= 0.8.17 errors on dependencies without a Project.toml, and
+            # SymDict (via AWSS3) only has a REQUIRE file. Remove once
+            # JuliaTesting/Aqua.jl#404 or JuliaCloud/SymDict.jl#11 is released;
+            # this then becomes an "Unexpected Pass" error.
+            persistent_tasks = (; broken = true),
         )
     end
     @testset "ExplicitImports" begin

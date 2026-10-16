@@ -1,6 +1,17 @@
-## Unreleased
+## v0.5.1
+
+### Fixed
+- Rename the Makie extension file to `ext/SpaceAltimetryMakieExt.jl` to match its `[extensions]` entry. In v0.5.0, loading SpaceAltimetry together with Makie failed with `Missing source file for ... SpaceAltimetryMakieExt` (#112).
+
+## v0.5.0
 
 ### New features
+- Composable operations on tables: `Filter` and `Transform` types that can be chained lazily with `|>` (e.g. `table(g) |> ICESat.Quality() |> InExtent(ext) |> DataFrame`), so the required HDF5 columns are read in one pass. The eager form `filter(op, t)` and `map(op, t)` also works.
+- Generic operations: `ToEGM2008` (geoid conversion) and `InExtent(extent)`.
+- Operations for a single mission live in exported mission modules (#107):
+  - `ICESat.Quality`, `ICESat.SaturationCorrect` and `ICESat.TopexToWGS84`
+  - `ICESat2.Quality` for ATL03, ATL06 and ATL08
+  - `GEDI.Quality` (the full L2A composite quality filter) and `GEDI.Sensitivity([gt=0.9])`
 - New `H5Table` system: generic, lazy HDF5-to-table reader that handles dimension flattening, nodata masking (`missing`), and transforms automatically.
 - `explore(granule)` opens an interactive terminal browser for inspecting HDF5 contents and selecting variables.
 - `table(g; variables=)` keyword allows reading custom variable sets instead of only the built-in defaults.
@@ -11,6 +22,7 @@
 - Documentation rewrite following the Diátaxis framework (tutorials, guides, topics, reference).
 
 ### Breaking
+- The package is renamed from SpaceLiDAR to **SpaceAltimetry** and has a new UUID (#105). Install it with `Pkg.add("SpaceAltimetry")` and load it with `using SpaceAltimetry`. `SpaceLiDAR` is still exported as an alias of the module, so code that qualifies names as `SpaceLiDAR.xxx` keeps working.
 - `table(granule)` is now the recommended interface; `points()` remains available for compatibility (see migration guide).
 - Fill values are now `missing` instead of `NaN`.
 - Removed deprecated `granule_from_file` (use `granule`) and `granules_from_folder` (use `granules`).
@@ -22,6 +34,7 @@
 ### Changed
 - Column types resolved at read time via transforms (e.g., `delta_time` becomes `DateTime`).
 - All products now use the shared `H5Table` infrastructure instead of per-product hardcoded readers.
+- CI dependency bumps (actions/checkout v7, codecov-action v7, julia-actions/setup-julia v3, julia-actions/cache v3).
 
 ## v0.4.2
 
