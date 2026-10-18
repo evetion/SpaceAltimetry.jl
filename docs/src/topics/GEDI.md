@@ -1,7 +1,8 @@
 # GEDI
 GEDI—launched in 2018—is attached to the ISS and investigates global ecosystems[^dub].
 
-We currently only support the L2A product (at version 2).
+We currently only support the L2A product, at version 2 and version 3 (released 2026).
+`search` returns version 2 by default; pass `version = 3` for version 3.
 
 See their [website](https://gedi.umd.edu).
 

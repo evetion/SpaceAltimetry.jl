@@ -11,9 +11,14 @@ prefix(::Mission{:ICESat2}) = "ATL"
 prefix(::Mission{:GEDI}) = "GEDI"
 mission(::Mission{T}) where {T} = T
 
-_fix_gedi_id(id::Nothing) = nothing
-_fix_gedi_id(id::String) = first(splitext(id))
-_fix_gedi_id(id::Vector{String}) = _fix_gedi_id.(id)
+# CMR's producer granule id has no extension for GEDI version 2 and earlier,
+# but keeps `.h5` from version 3 on.
+_fix_gedi_id(id::Nothing, version) = nothing
+function _fix_gedi_id(id::String, version)
+    stem = first(splitext(id))
+    return version >= 3 ? stem * ".h5" : stem
+end
+_fix_gedi_id(id::Vector{String}, version) = _fix_gedi_id.(id, version)
 
 const earthdata_url = "https://cmr.earthdata.nasa.gov/search/granules.umm_json_v1_6_4"
 
@@ -22,6 +27,9 @@ const earthdata_url = "https://cmr.earthdata.nasa.gov/search/granules.umm_json_v
     search(:GEDI02_A, "002")  # searches *all* GEDI v2 granules
 
 Search granules for a given mission and bounding box.
+
+For GEDI, `version = 3` searches the version 3 products (released 2026); the
+default is still version 2.
 """
 function search(
     m::Mission{:GEDI},
@@ -35,7 +43,7 @@ function search(
 )::Vector{GEDI_Granule}
     startswith(string(product), prefix(m)) || throw(ArgumentError("Wrong product $product for $(mission(m)) mission."))
 
-    id = _fix_gedi_id(id)
+    id = _fix_gedi_id(id, version)
 
     granules =
         earthdata_search(

@@ -32,6 +32,12 @@ end
 
     id = "GEDI02_A_2023003040347_O22988_03_T06105_02_003_02_V002.h5"
     @test length(search(:GEDI, :GEDI02_A; version = 2, id = id)) == 1
+    # version 3 producer ids keep the extension in CMR; both spellings work
+    id3 = "GEDI02_A_2020257225350_O09946_02_T08506_02_004_02_V003"
+    g3s = search(:GEDI, :GEDI02_A; version = 3, id = id3)
+    @test length(g3s) == 1
+    @test length(search(:GEDI, :GEDI02_A; version = 3, id = id3 * ".h5")) == 1
+    @test SL.info(g3s[1]).version == 3
 
     @test_throws ArgumentError search(:ICESat2, :GLAH14)
     @test_throws ArgumentError search(:Foo, :GLAH14)
@@ -123,7 +129,7 @@ end
     ogs = SL.granules("data")
     gs = SL.granules("data")
     @test ogs == gs
-    @test length(gs) == 7
+    @test length(gs) == 8
     copies = copy.(gs)
 
     # Set different path, but same id
@@ -785,4 +791,25 @@ end
     # gedi_info does not assign `sub_orbit`/`pge_version`, which the returned
     # NamedTuple references, so it throws UndefVarError.
     @test_broken SL.gedi_info("GEDI02_A_2019110014613_O01991_T04905_02_001_01.h5").type == :GEDI02_A
+
+    # version 3
+    i3 = SL.gedi_info("GEDI02_A_2020257225350_O09946_02_T08506_02_004_02_V003.h5")
+    @test i3.version == 3
+    @test i3.pge_version == 4
+    @test i3.orbit == 9946
+    @test i3.sub_orbit == 2
+    g3 = SL.granule(GEDI02v3_fn)
+    @test SL.gedi_version(gg) == 2
+    @test SL.gedi_version(g3) == 3
+    @test SL.gedi_version(GEDI_Granule{:GEDI02_A}("", "", (;), [])) == 2
+    @test SL.gedi_algorithms(gg) == (1, 2, 3, 4, 5, 6)
+    @test SL.gedi_algorithms(g3) == (1, 2, 5, 10)
+    @test SL.gedi_quality_path(gg) == "quality_flag"
+    @test SL.gedi_quality_path(g3) == "l2a_quality_flag_rel3"
+
+    # CMR producer ids: no extension up to version 2, `.h5` from version 3
+    @test SL._fix_gedi_id("a.h5", 2) == "a"
+    @test SL._fix_gedi_id("a", 3) == "a.h5"
+    @test SL._fix_gedi_id(["a", "b.h5"], 3) == ["a.h5", "b.h5"]
+    @test isnothing(SL._fix_gedi_id(nothing, 3))
 end
