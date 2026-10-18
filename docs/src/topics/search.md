@@ -46,7 +46,7 @@ Each mission has different default products and providers:
 ```julia
 search(:ICESat2)          # defaults to ATL03, version 6
 search(:ICESat2, :ATL08)  # ATL08, version 6
-search(:GEDI)             # defaults to GEDI02_A, version 2
+search(:GEDI)             # defaults to GEDI02_A, version 3
 search(:ICESat)           # defaults to GLAH14, version 34
 ```
 

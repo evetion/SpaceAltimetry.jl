@@ -3,7 +3,7 @@
 #
 #   julia --project=. test/make_gedi_v3_subset.jl <full V003 granule> <output folder>
 #
-# The test artifact (release v0.4.0 of evetion/SpaceLiDAR-artifacts) was made from
+# The test artifact (release v0.3.0 of evetion/SpaceLiDAR-artifacts) was made from
 # GEDI02_A_2020257225350_O09946_02_T08506_02_004_02_V003.h5, beams BEAM0000 (coverage)
 # and BEAM0101 (full power), tile 52–53°N, 6–7°E (the Netherlands).
 using HDF5

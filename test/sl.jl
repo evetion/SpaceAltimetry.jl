@@ -801,7 +801,8 @@ end
     g3 = SL.granule(GEDI02v3_fn)
     @test SL.gedi_version(gg) == 2
     @test SL.gedi_version(g3) == 3
-    @test SL.gedi_version(GEDI_Granule{:GEDI02_A}("", "", (;), [])) == 2
+    @test SL.gedi_version(GEDI_Granule{:GEDI02_A}("", "", (;), [])) == 3
+    @test SL.gedi_version(GEDI_Granule{:GEDI02_A}("GEDI02_A_2019110014613_O01991_T04905_02_001_01.h5", "", (;), [])) == 1
     @test SL.gedi_algorithms(gg) == (1, 2, 3, 4, 5, 6)
     @test SL.gedi_algorithms(g3) == (1, 2, 5, 10)
     @test SL.gedi_quality_path(gg) == "quality_flag"

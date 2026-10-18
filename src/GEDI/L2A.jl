@@ -302,10 +302,10 @@ end
 
 GEDI L2A canopy variables — reads highest return instead of lowest mode. Pass
 the granule to get the right `quality` flag for its product version; without it
-the version 2 flag (`quality_flag`) is used.
+the version 3 flag (`l2a_quality_flag_rel3`) is used.
 """
 function gedi_l2a_canopy_variables(g::Union{Nothing,GEDI_Granule} = nothing)
-    quality = isnothing(g) ? "quality_flag" : gedi_quality_path(g)
+    quality = isnothing(g) ? "l2a_quality_flag_rel3" : gedi_quality_path(g)
     [
         Variable(:longitude, "lon_highestreturn", Float64),
         Variable(:latitude, "lat_highestreturn", Float64),

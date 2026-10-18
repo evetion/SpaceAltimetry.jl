@@ -65,13 +65,14 @@ end
     gedi_version(g::GEDI_Granule)
 
 Product version of `g` from the `_V00x` suffix of its filename. Filenames
-without that suffix (version 1, or an empty id) count as version 2, which has
-the same layout.
+without that suffix are version 1, which has the same layout as version 2. A
+granule without an id (e.g. a template) counts as the current version, 3.
 """
 function gedi_version(g::GEDI_Granule)
     stem = first(splitext(basename(id(g))))
+    isempty(stem) && return 3
     m = match(r"_V(\d{3})$", stem)
-    return isnothing(m) ? 2 : parse(Int, m.captures[1])
+    return isnothing(m) ? 1 : parse(Int, m.captures[1])
 end
 
 """

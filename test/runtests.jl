@@ -43,7 +43,7 @@ ATL08_fn = download_artifact(v"0.3", "ATL08_20201121151145_08920913_006_01.h5")
 ATL12_fn = download_artifact(v"0.3", "ATL12_20220404110409_01891501_006_02.h5")
 GEDI02_fn = download_artifact(v"0.1", "GEDI02_A_2019242104318_O04046_01_T02343_02_003_02_V002.h5")
 # Subset (two beams, 52–53°N 6–7°E) of a version 3 granule; see test/make_gedi_v3_subset.jl
-GEDI02v3_fn = download_artifact(v"0.4", "GEDI02_A_2020257225350_O09946_02_T08506_02_004_02_V003.h5")
+GEDI02v3_fn = download_artifact(v"0.3", "GEDI02_A_2020257225350_O09946_02_T08506_02_004_02_V003.h5")
 GLAH14_fn = download_artifact(v"0.1", "GLAH14_634_1102_001_0071_0_01_0001.H5")
 GLAH06_fn = download_artifact(v"0.1", "GLAH06_634_2131_002_0084_4_01_0001.H5")
 

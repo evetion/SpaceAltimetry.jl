@@ -1,11 +1,15 @@
 ## Unreleased
 
 ### New features
-- GEDI L2A version 3 (released 2026). `granule`, `table`, `points`, `GEDI.Quality` and `search(:GEDI, :GEDI02_A; version = 3)` work with version 3 files:
+- GEDI L2A version 3 (released 2026). `granule`, `table`, `points`, `GEDI.Quality` and `search` work with version 3 files:
   - the `quality` column reads `l2a_quality_flag_rel3`, which replaces the version 2 `quality_flag`;
   - `GEDI.Quality` reads `l2_algrunflag` for the selected-algorithm checks, because version 3 has algorithm setting groups 1, 2, 5 and 10 instead of 1–6;
   - `gedi_l2a_canopy_variables(g)` takes the granule to pick the right quality flag.
 - `gedi_version`, `gedi_algorithms` and `gedi_quality_path` describe the layout of a GEDI granule.
+
+### Breaking
+- `search(:GEDI, ...)` returns GEDI version 3 granules by default; pass `version = 2` for version 2.
+- `gedi_l2a_canopy_variables()` without a granule reads the version 3 quality flag; pass the granule (`gedi_l2a_canopy_variables(g)`) to match its version.
 
 ### Fixed
 - `search(:GEDI, ...; id = ...)` found no version 3 granules, because CMR keeps the `.h5` extension in version 3 producer ids.

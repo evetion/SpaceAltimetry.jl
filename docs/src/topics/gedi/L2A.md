@@ -43,7 +43,7 @@ GEDI L2A provides ground elevation, canopy height metrics, and relative height
 ```julia
 using SpaceAltimetry, DataFrames
 
-g = granule("GEDI02_A_2019242104318_O04046_01_T02343_02_003_02_V002.h5")
+g = granule("GEDI02_A_2020257225350_O09946_02_T08506_02_004_02_V003.h5")
 t = table(g)
 df = DataFrame(t)
 ```
@@ -70,7 +70,7 @@ t = table(g; variables=gedi_l2a_canopy_variables(g))
 ```
 
 Passing the granule picks the `quality` flag of its product version; without it
-the version 2 flag is used.
+the version 3 flag is used.
 
 This reads `elev_highestreturn` / `lon_highestreturn` / `lat_highestreturn`.
 
@@ -91,8 +91,8 @@ defaults to `0.9`.
 
 ## Version 3
 
-Version 3 (PGE 004, filenames ending in `_V003.h5`) is read with the same
-schema, with these differences (GEDI Level 2 User Guide V3.0, section 7.1):
+Version 3 (PGE 004, filenames ending in `_V003.h5`) is the default since it was
+released in 2026. It is read with the same schema as version 2, with these differences (GEDI Level 2 User Guide V3.0, section 7.1):
 
 | | version 2 | version 3 |
 |:--|:--|:--|
@@ -101,7 +101,8 @@ schema, with these differences (GEDI Level 2 User Guide V3.0, section 7.1):
 | [`GEDI.Quality`](@ref) algorithm checks | `rx_processing_aN/{rx_algrunflag, zcross, toploc}` of the selected group | `l2_algrunflag`, which combines the same checks and adds `0 < sensitivity < 1` |
 
 ```julia
-gs = search(:GEDI, :GEDI02_A; version = 3, extent = extent)
+gs = search(:GEDI, :GEDI02_A; extent = extent)                # version 3 (default)
+gs2 = search(:GEDI, :GEDI02_A; version = 2, extent = extent)  # version 2
 ```
 
 !!! note "`selected_algorithm` in version 3"

@@ -28,14 +28,14 @@ const earthdata_url = "https://cmr.earthdata.nasa.gov/search/granules.umm_json_v
 
 Search granules for a given mission and bounding box.
 
-For GEDI, `version = 3` searches the version 3 products (released 2026); the
-default is still version 2.
+For GEDI the default is version 3 (released 2026); pass `version = 2` for the
+version 2 products.
 """
 function search(
     m::Mission{:GEDI},
     product::Symbol = :GEDI02_A;
     extent::Extent = world,
-    version::Int = 2,
+    version::Int = 3,
     before::Union{Nothing,DateTime} = nothing,
     after::Union{Nothing,DateTime} = nothing,
     id::Union{Nothing,String,Vector{String}} = nothing,
