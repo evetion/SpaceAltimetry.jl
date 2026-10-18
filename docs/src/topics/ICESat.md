@@ -5,6 +5,10 @@ We currently support the GLAH06 (Land Ice) and GLA14 (Land Surface) data product
 
 See their [website](https://icesat.gsfc.nasa.gov/icesat/).
 
+Mission-specific filters and transforms are available under the exported
+`ICESat` module, including [`ICESat.Quality`](@ref),
+[`ICESat.SaturationCorrect`](@ref), and [`ICESat.TopexToWGS84`](@ref).
+
 [^schutz]: Schutz, B. E., H. J. Zwally, C. A. Shuman, D. Hancock, and J. P. DiMarzio. 2005. "Overview of the ICESat Mission." Geophysical Research Letters 32 (21). https://doi.org/10/bzbspg.
 
 ## Products

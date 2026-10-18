@@ -5,7 +5,12 @@ dir = @__DIR__
 cp(joinpath(dir, "../CONTRIBUTING.md"), joinpath(dir, "src/CONTRIBUTING.md"); force = true)
 
 makedocs(;
-    modules = [SpaceAltimetry],
+    modules = [
+        SpaceAltimetry,
+        SpaceAltimetry.ICESat,
+        SpaceAltimetry.ICESat2,
+        SpaceAltimetry.GEDI,
+    ],
     format = Markdown(),
     repo = "https://github.com/evetion/SpaceAltimetry.jl/blob/{commit}{path}#L{line}",
     sitename = "SpaceAltimetry.jl",

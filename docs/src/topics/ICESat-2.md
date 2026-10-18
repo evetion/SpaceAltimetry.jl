@@ -5,6 +5,9 @@ We currently support the ATL03, ATL06, ATL08 and ATL12 data products (at version
 
 See their [website](https://icesat-2.gsfc.nasa.gov).
 
+Use [`ICESat2.Quality`](@ref) with `filter` or in an operation pipeline to
+retain the quality subset defined by ATL03, ATL06, or ATL08.
+
 [^markus]: Markus, Thorsten, Tom Neumann, Anthony Martino, Waleed Abdalati, Kelly Brunt, Beata Csatho, Sinead Farrell, et al. 2017. "The Ice, Cloud, and Land Elevation Satellite-2 (ICESat-2): Science Requirements, Concept, and Implementation." Remote Sensing of Environment 190 (March): 260–73. https://doi.org/10/gg3f7c.
 
 ## Products

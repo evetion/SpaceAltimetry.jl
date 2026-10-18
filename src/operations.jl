@@ -18,8 +18,8 @@
 #     kept in the result.
 #   * `_inputs` is *granule-dispatched*: generic operations specialise on the
 #     abstract `Granule`, product-bound ones on their concrete granule (e.g.
-#     `TopexToWGS84` only on `ICESat_Granule`). Inapplicable `(op, granule)`
-#     pairs hit the default method, which throws an applicability error.
+#     `ICESat.TopexToWGS84` only on `ICESat_Granule`). Inapplicable
+#     `(op, granule)` pairs hit the default method, which throws an error.
 #
 # Operation definitions live next to the code they relate to: generic ones with
 # the geoid kernels (`geoid.jl`) or here (`InExtent`); product-bound ones in the
@@ -319,8 +319,8 @@ end
 _transform!(op::Transform, t) = (foreach(c -> _run!(op, c), _containers(t)); t)
 
 # ─── generic operations ───────────────────────────────────────────────────────
-# Product-bound operations (TopexToWGS84, SaturationCorrect, ICESatQuality) live
-# in the product files; geoid-themed generic ops (ToEGM2008) live in geoid.jl.
+# Product-bound operations live in mission modules (for example,
+# `ICESat.Quality`); geoid-themed generic ops (`ToEGM2008`) live in geoid.jl.
 
 """
     InExtent(extent::Extent)

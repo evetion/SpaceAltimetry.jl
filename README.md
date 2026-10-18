@@ -1,13 +1,13 @@
 [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://evetion.github.io/SpaceAltimetry.jl/stable)
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://evetion.github.io/SpaceAltimetry.jl/dev)
 [![CI](https://github.com/evetion/SpaceAltimetry.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/evetion/SpaceAltimetry.jl/actions/workflows/CI.yml)
-[![codecov](https://codecov.io/gh/evetion/SpaceAltimetry.jl/branch/master/graph/badge.svg?token=nztwnGtIcY)](https://codecov.io/gh/evetion/SpaceAltimetry.jl)
+[![codecov](https://codecov.io/gh/evetion/SpaceAltimetry.jl/branch/main/graph/badge.svg?token=nztwnGtIcY)](https://codecov.io/gh/evetion/SpaceAltimetry.jl)
 [![DOI](https://zenodo.org/badge/241095197.svg)](https://zenodo.org/badge/latestdoi/241095197)
 [![Aqua QA](https://juliatesting.github.io/Aqua.jl/dev/assets/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 
 # SpaceAltimetry
 
-SpaceAltimetry.jl searches, downloads, and reads spaceborne lidar data
+SpaceAltimetry.jl (previously SpaceLiDAR.jl) searches, downloads, and reads spaceborne lidar altimetry data
 from the ICESat, ICESat-2, and GEDI NASA missions. Granules are exposed as lazy
 [Tables.jl](https://github.com/JuliaData/Tables.jl)-compatible HDF5 tables, so
 you can inspect product data quickly and materialize only when you need to.
@@ -96,9 +96,9 @@ greenland = Extent(X = (-75.0, -10.0), Y = (58.0, 84.0))
 
 df = table(g) |>
     InExtent(greenland) |>
-    ICESatQuality() |>
-    SaturationCorrect() |>
-    TopexToWGS84() |>
+    ICESat.Quality() |>
+    ICESat.SaturationCorrect() |>
+    ICESat.TopexToWGS84() |>
     ToEGM2008() |>
     DataFrame
 ```
