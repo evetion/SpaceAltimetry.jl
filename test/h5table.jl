@@ -856,6 +856,45 @@ end
         close(t)
     end
 
+    @testset "GEDI L2A version 3" begin
+        g = SL.granule(GEDI02v3_fn)
+        tracks = ["BEAM0000", "BEAM0101"]
+        t = SL.table(g; tracks = tracks)
+        df = DataFrame(t)
+        @test nrow(df) == 1198 + 1206
+
+        # `quality` is the version 3 flag, l2a_quality_flag_rel3
+        raw = h5open(GEDI02v3_fn) do f
+            vcat((read(f["$b/l2a_quality_flag_rel3"]) for b in tracks)...)
+        end
+        @test df.quality == (raw .!= 0)
+
+        # Quality reads l2_algrunflag instead of selected_algorithm (whose
+        # valid_range is 1-6 in version 3 although group 10 is used)
+        names = [v.name for v in SL._inputs(GEDI.Quality(), g)]
+        @test :l2_algrun in names
+        @test :selected_algorithm ∉ names
+        filtered = filter(GEDI.Quality(), t)
+        legacy = SL.points(g; tracks = tracks, filtered = true)
+        @test length(filtered.height) == length(legacy.height)
+        @test 0 < length(filtered.height) < nrow(df)
+
+        stricter = collect(t |> GEDI.Quality() |> GEDI.Sensitivity(gt = 0.95))
+        @test all(x -> 0.95 < x <= 1, stricter.sensitivity)
+
+        # canopy schema with the version-specific quality flag
+        c = DataFrame(SL.table(g; tracks = tracks, variables = SL.gedi_l2a_canopy_variables(g)))
+        @test nrow(c) == nrow(df)
+        @test c.quality == df.quality
+
+        # sourceless tables: version 3 columns validate, missing algorithm columns throw
+        q = DataFrame(collect(t |> GEDI.Quality()))
+        cols = DataFrame(SL.table(g; tracks = tracks, variables = SL._inputs(GEDI.Quality(), g)))
+        @test count(SL._mask(GEDI.Quality(), cols)) == nrow(q)
+        @test_throws ArgumentError SL._mask(GEDI.Quality(), select(cols, Not(:l2_algrun)))
+        close(t)
+    end
+
     @testset "partitioned map" begin
         g = SL.granule(ATL08_fn)
         t = SL.table(g)

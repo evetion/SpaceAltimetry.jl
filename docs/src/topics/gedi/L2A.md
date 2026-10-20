@@ -1,6 +1,7 @@
 # L2A — Ground Elevation & Canopy Height
 
 Version 2 — [User Guide](https://lpdaac.usgs.gov/documents/998/GEDI02_UserGuide_V21.pdf) · [ATBD](https://lpdaac.usgs.gov/documents/581/GEDI_WF_ATBD_v1.0.pdf)
+Version 3 — [User Guide](https://lpdaac.usgs.gov/documents/2442/GEDI02_User_Guide_V3.pdf) · [Data dictionary](https://lpdaac.usgs.gov/documents/2439/gedi_l2a_v3_product_data_dictionary.html)
 
 ```@setup gedi
 using SpaceAltimetry
@@ -42,7 +43,7 @@ GEDI L2A provides ground elevation, canopy height metrics, and relative height
 ```julia
 using SpaceAltimetry, DataFrames
 
-g = granule("GEDI02_A_2019242104318_O04046_01_T02343_02_003_02_V002.h5")
+g = granule("GEDI02_A_2020257225350_O09946_02_T08506_02_004_02_V003.h5")
 t = table(g)
 df = DataFrame(t)
 ```
@@ -62,11 +63,14 @@ SpaceAltimetry.default_tracks(g)
 
 ## Canopy Heights
 
-Use `gedi_l2a_canopy_variables()` to read highest return instead of lowest mode:
+Use `gedi_l2a_canopy_variables(g)` to read highest return instead of lowest mode:
 
 ```julia
-t = table(g; variables=gedi_l2a_canopy_variables())
+t = table(g; variables=gedi_l2a_canopy_variables(g))
 ```
+
+Passing the granule picks the `quality` flag of its product version; without it
+the version 3 flag is used.
 
 This reads `elev_highestreturn` / `lon_highestreturn` / `lat_highestreturn`.
 
@@ -84,3 +88,25 @@ stale/degrade, amplitude, and selected algorithm fields required by the full
 [`points`](@ref)`(g; filtered=true)` predicate. The optional
 [`GEDI.Sensitivity`](@ref) filter keeps `gt < sensitivity <= 1.0`; `gt`
 defaults to `0.9`.
+
+## Version 3
+
+Version 3 (PGE 004, filenames ending in `_V003.h5`) is the default since it was
+released in 2026. It is read with the same schema as version 2, with these differences (GEDI Level 2 User Guide V3.0, section 7.1):
+
+| | version 2 | version 3 |
+|:--|:--|:--|
+| `quality` column | `quality_flag` | `l2a_quality_flag_rel3`: the version 2 conditions plus `sensitivity_a2 > 0.95` over land (`> 0.98` in tropical forest) and `elev_highestreturn − digital_elevation_model < 150` m. The version 2 flag is still in the file as `l2a_quality_flag_rel2`. |
+| algorithm setting groups | 1–6 | 1, 2, 5, 10 |
+| [`GEDI.Quality`](@ref) algorithm checks | `rx_processing_aN/{rx_algrunflag, zcross, toploc}` of the selected group | `l2_algrunflag`, which combines the same checks and adds `0 < sensitivity < 1` |
+
+```julia
+gs = search(:GEDI, :GEDI02_A; extent = extent)                # version 3 (default)
+gs2 = search(:GEDI, :GEDI02_A; version = 2, extent = extent)  # version 2
+```
+
+!!! note "`selected_algorithm` in version 3"
+    In version 3 files, `selected_algorithm` keeps the version 2 `valid_range` of
+    1–6, but shots also use group 10. Because nodata masking honours `valid_range`,
+    those shots read as `missing` when you add `selected_algorithm` as a column.
+    `GEDI.Quality` uses `l2_algrunflag` instead, so it is not affected.

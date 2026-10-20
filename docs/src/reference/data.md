@@ -35,4 +35,7 @@ Pages   = ["L2A.jl"]
 
 ```@docs
 SpaceAltimetry.gedi_l2a_canopy_variables
+SpaceAltimetry.gedi_version
+SpaceAltimetry.gedi_algorithms
+SpaceAltimetry.gedi_quality_path
 ```

@@ -11,7 +11,7 @@ The names of the tuples are based on the following fields:
 | `height`           | `elev_lowestmode`              | Standard land-ice segment height                       | m above the WGS 84 ellipsoid |
 | `height_error`     | `elevation_bin0_error`         | Error in elevation of bin 0                            | m                            |
 | `datetime`         | `delta_time`                   | + `ancillary_data/atlas_sdp_gps_epoch` + `gps_offset`  | date-time                    |
-| `quality`          | `quality_flag`                 | Flag simpilfying selection of most useful data         | 1 = high quality             |
+| `quality`          | `quality_flag` (v2), `l2a_quality_flag_rel3` (v3) | Flag simpilfying selection of most useful data | 1 = high quality     |
 | `surface`          | `surface_flag`                 | Indicates elev_lowestmode is within 300m of DEM or MSS | 1 = high quality             |
 | `nmodes`           | `num_detectedmodes`            | Number of detected modes in rxwaveform                 | -                            |
 | `intensity`        | `energy_total`                 | Integrated counts in the return waveform               | -                            |
@@ -65,7 +65,7 @@ function points(
 end
 
 function points(
-    ::GEDI_Granule{:GEDI02_A},
+    granule::GEDI_Granule{:GEDI02_A},
     file::HDF5.H5DataStore,
     track::AbstractString,
     step = 1,
@@ -146,7 +146,7 @@ function points(
     datetime = open_dataset(group, "delta_time")[start:step:stop]::Vector{Float64}
 
     # Quality
-    quality = open_dataset(group, "quality_flag")[start:step:stop]::Vector{UInt8}
+    quality = open_dataset(group, gedi_quality_path(granule))[start:step:stop]::Vector{UInt8}
     rx_assess_quality_flag = open_dataset(group, "rx_assess/quality_flag")[start:step:stop]::Vector{UInt8}
     degrade_flag = open_dataset(group, "degrade_flag")[start:step:stop]::Vector{UInt8}
     stale_return_flag = open_dataset(group, "geolocation/stale_return_flag")[start:step:stop]::Vector{UInt8}
@@ -157,16 +157,21 @@ function points(
     sd_corrected = open_dataset(group, "rx_assess/sd_corrected")[start:step:stop]::Vector{Float32}
     rx_maxamp_f = rx_maxamp ./ sd_corrected
 
-    # Algorithm
-    zcross = similar(aid, Float32)
-    toploc = similar(aid, Float32)
-    algrun = similar(aid, Bool)
-    for algorithm = 1:6
-        am = aid .== algorithm
-        zcross[am] = open_dataset(group, "rx_processing_a$algorithm/zcross")[start:step:stop][am]
-        toploc[am] = open_dataset(group, "rx_processing_a$algorithm/toploc")[start:step:stop][am]
-        algrun[am] =
-            open_dataset(group, "rx_processing_a$algorithm/rx_algrunflag")[start:step:stop][am]
+    # Checks of the selected algorithm setting group, as in `GEDI.Quality`
+    if gedi_version(granule) >= 3
+        # rx_algrunflag, zcross > 0 and toploc > 0 of the selected group (plus
+        # 0 < sensitivity < 1), combined by the product itself
+        algorithm_ok = open_dataset(group, "l2_algrunflag")[start:step:stop] .!= 0
+    else
+        # rows whose selected algorithm has no group in the file fail
+        algorithm_ok = falses(length(aid))
+        for algorithm in gedi_algorithms(granule)
+            am = aid .== algorithm
+            zcross = open_dataset(group, "rx_processing_a$algorithm/zcross")[start:step:stop]
+            toploc = open_dataset(group, "rx_processing_a$algorithm/toploc")[start:step:stop]
+            algrun = open_dataset(group, "rx_processing_a$algorithm/rx_algrunflag")[start:step:stop]
+            algorithm_ok[am] .= (algrun[am] .!= 0) .& (zcross[am] .> 0) .& (toploc[am] .> 0)
+        end
     end
 
     sensitivity = open_dataset(group, "sensitivity")[start:step:stop]::Vector{Float32}
@@ -181,9 +186,7 @@ function points(
         m .&= stale_return_flag .== 0
         m .&= rx_maxamp_f .>= 8
         # m .& (1 .> sensitivity .> 0.9)
-        m .& algrun .!= 0
-        m .&= zcross .> 0
-        m .&= toploc .> 0
+        m .&= algorithm_ok
         m .&= degrade_flag .== 0
         # m .&= zarange .<= 2
     end
@@ -277,7 +280,7 @@ end
 
 # ─── table() defaults ─────────────────────────────────────────────────────────
 
-function default_variables(::GEDI_Granule{:GEDI02_A})
+function default_variables(g::GEDI_Granule{:GEDI02_A})
     [
         Variable(:longitude, "lon_lowestmode", Float64),
         Variable(:latitude, "lat_lowestmode", Float64),
@@ -287,15 +290,22 @@ function default_variables(::GEDI_Granule{:GEDI02_A})
         Variable(:intensity, "energy_total", Float32),
         Variable(:sensitivity, "sensitivity", Float32),
         Variable(:surface, "surface_flag", UInt8, ToBool()),
-        Variable(:quality, "quality_flag", UInt8, ToBool()),
+        Variable(:quality, gedi_quality_path(g), UInt8, ToBool()),
         Variable(:nmodes, "num_detectedmodes", UInt8),
         Variable(:sun_angle, "solar_elevation", Float32),
         Variable(:height_reference, "digital_elevation_model", Float32),
     ]
 end
 
-"""GEDI L2A canopy variables — reads highest return instead of lowest mode."""
-function gedi_l2a_canopy_variables()
+"""
+    gedi_l2a_canopy_variables([g::GEDI_Granule])
+
+GEDI L2A canopy variables — reads highest return instead of lowest mode. Pass
+the granule to get the right `quality` flag for its product version; without it
+the version 3 flag (`l2a_quality_flag_rel3`) is used.
+"""
+function gedi_l2a_canopy_variables(g::Union{Nothing,GEDI_Granule} = nothing)
+    quality = isnothing(g) ? "l2a_quality_flag_rel3" : gedi_quality_path(g)
     [
         Variable(:longitude, "lon_highestreturn", Float64),
         Variable(:latitude, "lat_highestreturn", Float64),
@@ -305,7 +315,7 @@ function gedi_l2a_canopy_variables()
         Variable(:intensity, "energy_total", Float32),
         Variable(:sensitivity, "sensitivity", Float32),
         Variable(:surface, "surface_flag", UInt8, ToBool()),
-        Variable(:quality, "quality_flag", UInt8, ToBool()),
+        Variable(:quality, quality, UInt8, ToBool()),
         Variable(:nmodes, "num_detectedmodes", UInt8),
         Variable(:sun_angle, "solar_elevation", Float32),
         Variable(:height_reference, "digital_elevation_model", Float32),
