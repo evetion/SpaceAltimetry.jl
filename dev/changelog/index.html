@@ -89,7 +89,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#v051" class="md-skip">
+        <a href="#unreleased" class="md-skip">
           Skip to content
         </a>
       
@@ -1773,6 +1773,56 @@ package if you use it in production.
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#unreleased" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unreleased
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Unreleased">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#breaking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Breaking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#v051" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1785,7 +1835,7 @@ package if you use it in production.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#fixed" class="md-nav__link">
+  <a href="#fixed_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Fixed
@@ -1813,7 +1863,7 @@ package if you use it in production.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#new-features" class="md-nav__link">
+  <a href="#new-features_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         New features
@@ -1824,7 +1874,7 @@ package if you use it in production.
 </li>
         
           <li class="md-nav__item">
-  <a href="#breaking" class="md-nav__link">
+  <a href="#breaking_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Breaking
@@ -1863,7 +1913,7 @@ package if you use it in production.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#fixed_1" class="md-nav__link">
+  <a href="#fixed_2" class="md-nav__link">
     <span class="md-ellipsis">
       
         Fixed
@@ -1891,7 +1941,7 @@ package if you use it in production.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#fixed_2" class="md-nav__link">
+  <a href="#fixed_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         Fixed
@@ -1919,7 +1969,7 @@ package if you use it in production.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#new-features_1" class="md-nav__link">
+  <a href="#new-features_2" class="md-nav__link">
     <span class="md-ellipsis">
       
         New features
@@ -1930,7 +1980,7 @@ package if you use it in production.
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed_3" class="md-nav__link">
+  <a href="#fixed_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         Fixed
@@ -1941,7 +1991,7 @@ package if you use it in production.
 </li>
         
           <li class="md-nav__item">
-  <a href="#breaking_1" class="md-nav__link">
+  <a href="#breaking_2" class="md-nav__link">
     <span class="md-ellipsis">
       
         Breaking
@@ -2096,21 +2146,50 @@ package if you use it in production.
 
   <h1>Changelog</h1>
 
-<p><a id='v0.5.1'></a></p>
-<p><a id='v0.5.1-1'></a></p>
-<h2 id="v051">v0.5.1<a class="headerlink" href="#v051" title="Permanent link">&para;</a></h2>
+<p><a id='Unreleased'></a></p>
+<p><a id='Unreleased-1'></a></p>
+<h2 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">&para;</a></h2>
+<p><a id='New-features'></a></p>
+<p><a id='New-features-1'></a></p>
+<h3 id="new-features">New features<a class="headerlink" href="#new-features" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>GEDI L2A version 3 (released 2026). <code>granule</code>, <code>table</code>, <code>points</code>, <code>GEDI.Quality</code> and <code>search</code> work with version 3 files:</p>
+<ul>
+<li>the <code>quality</code> column reads <code>l2a_quality_flag_rel3</code>, which replaces the version 2 <code>quality_flag</code>;</li>
+<li><code>GEDI.Quality</code> reads <code>l2_algrunflag</code> for the selected-algorithm checks, because version 3 has algorithm setting groups 1, 2, 5 and 10 instead of 1–6;</li>
+<li><code>gedi_l2a_canopy_variables(g)</code> takes the granule to pick the right quality flag.</li>
+<li><code>gedi_version</code>, <code>gedi_algorithms</code> and <code>gedi_quality_path</code> describe the layout of a GEDI granule.</li>
+</ul>
+</li>
+</ul>
+<p><a id='Breaking'></a></p>
+<p><a id='Breaking-1'></a></p>
+<h3 id="breaking">Breaking<a class="headerlink" href="#breaking" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>search(:GEDI, ...)</code> returns GEDI version 3 granules by default; pass <code>version = 2</code> for version 2.</li>
+<li><code>gedi_l2a_canopy_variables()</code> without a granule reads the version 3 quality flag; pass the granule (<code>gedi_l2a_canopy_variables(g)</code>) to match its version.</li>
+</ul>
 <p><a id='Fixed'></a></p>
 <p><a id='Fixed-1'></a></p>
 <h3 id="fixed">Fixed<a class="headerlink" href="#fixed" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>search(:GEDI, ...; id = ...)</code> found no version 3 granules, because CMR keeps the <code>.h5</code> extension in version 3 producer ids.</li>
+<li><code>points(g::GEDI_Granule; filtered = true)</code> ignored <code>rx_algrunflag</code>, and could keep shots whose selected algorithm it did not read.</li>
+</ul>
+<p><a id='v0.5.1'></a></p>
+<p><a id='v0.5.1-1'></a></p>
+<h2 id="v051">v0.5.1<a class="headerlink" href="#v051" title="Permanent link">&para;</a></h2>
+<p><a id='Fixed-2'></a></p>
+<h3 id="fixed_1">Fixed<a class="headerlink" href="#fixed_1" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Rename the Makie extension file to <code>ext/SpaceAltimetryMakieExt.jl</code> to match its <code>[extensions]</code> entry. In v0.5.0, loading SpaceAltimetry together with Makie failed with <code>Missing source file for ... SpaceAltimetryMakieExt</code> (#112).</li>
 </ul>
 <p><a id='v0.5.0'></a></p>
 <p><a id='v0.5.0-1'></a></p>
 <h2 id="v050">v0.5.0<a class="headerlink" href="#v050" title="Permanent link">&para;</a></h2>
-<p><a id='New-features'></a></p>
-<p><a id='New-features-1'></a></p>
-<h3 id="new-features">New features<a class="headerlink" href="#new-features" title="Permanent link">&para;</a></h3>
+<p><a id='New-features-2'></a></p>
+<h3 id="new-features_1">New features<a class="headerlink" href="#new-features_1" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Composable operations on tables: <code>Filter</code> and <code>Transform</code> types that can be chained lazily with <code>|&gt;</code> (e.g. <code>table(g) |&gt; ICESat.Quality() |&gt; InExtent(ext) |&gt; DataFrame</code>), so the required HDF5 columns are read in one pass. The eager form <code>filter(op, t)</code> and <code>map(op, t)</code> also works.</li>
 <li>Generic operations: <code>ToEGM2008</code> (geoid conversion) and <code>InExtent(extent)</code>.</li>
@@ -2131,9 +2210,8 @@ package if you use it in production.
 </ul>
 </li>
 </ul>
-<p><a id='Breaking'></a></p>
-<p><a id='Breaking-1'></a></p>
-<h3 id="breaking">Breaking<a class="headerlink" href="#breaking" title="Permanent link">&para;</a></h3>
+<p><a id='Breaking-2'></a></p>
+<h3 id="breaking_1">Breaking<a class="headerlink" href="#breaking_1" title="Permanent link">&para;</a></h3>
 <ul>
 <li>The package is renamed from SpaceLiDAR to <strong>SpaceAltimetry</strong> and has a new UUID (#105). Install it with <code>Pkg.add("SpaceAltimetry")</code> and load it with <code>using SpaceAltimetry</code>. <code>SpaceLiDAR</code> is still exported as an alias of the module, so code that qualifies names as <code>SpaceLiDAR.xxx</code> keeps working.</li>
 <li><code>table(granule)</code> is now the recommended interface; <code>points()</code> remains available for compatibility (see migration guide).</li>
@@ -2155,8 +2233,8 @@ package if you use it in production.
 <p><a id='v0.4.2'></a></p>
 <p><a id='v0.4.2-1'></a></p>
 <h2 id="v042">v0.4.2<a class="headerlink" href="#v042" title="Permanent link">&para;</a></h2>
-<p><a id='Fixed-2'></a></p>
-<h3 id="fixed_1">Fixed<a class="headerlink" href="#fixed_1" title="Permanent link">&para;</a></h3>
+<p><a id='Fixed-3'></a></p>
+<h3 id="fixed_2">Fixed<a class="headerlink" href="#fixed_2" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Fix <code>download!</code> to create directories and normalize paths (#95).</li>
 <li>Update Makie compat to 0.24 (#93).</li>
@@ -2166,16 +2244,16 @@ package if you use it in production.
 <p><a id='v0.4.1'></a></p>
 <p><a id='v0.4.1-1'></a></p>
 <h2 id="v041">v0.4.1<a class="headerlink" href="#v041" title="Permanent link">&para;</a></h2>
-<p><a id='Fixed-3'></a></p>
-<h3 id="fixed_2">Fixed<a class="headerlink" href="#fixed_2" title="Permanent link">&para;</a></h3>
+<p><a id='Fixed-4'></a></p>
+<h3 id="fixed_3">Fixed<a class="headerlink" href="#fixed_3" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Fix ICESat-2 search after data migration to EarthData Cloud.</li>
 </ul>
 <p><a id='v0.4.0'></a></p>
 <p><a id='v0.4.0-1'></a></p>
 <h2 id="v040">v0.4.0<a class="headerlink" href="#v040" title="Permanent link">&para;</a></h2>
-<p><a id='New-features-2'></a></p>
-<h3 id="new-features_1">New features<a class="headerlink" href="#new-features_1" title="Permanent link">&para;</a></h3>
+<p><a id='New-features-3'></a></p>
+<h3 id="new-features_2">New features<a class="headerlink" href="#new-features_2" title="Permanent link">&para;</a></h3>
 <ul>
 <li>New types <code>Table</code> and <code>PartitionedTable</code>, which support the Tables.jl interface. This prevents allocating code like <code>reduce(vcat, DataFrame.(points(granule)))</code> to get a DataFrame. You can now just call <code>DataFrame(table)</code>.</li>
 <li>Reduced allocations in retrieving point data.</li>
@@ -2185,14 +2263,14 @@ package if you use it in production.
 <li><code>search(granule, :OtherProduct)</code> for cross-product granule lookup.</li>
 <li><code>id</code> keyword in <code>search</code> for fetching specific granules.</li>
 </ul>
-<p><a id='Fixed-4'></a></p>
-<h3 id="fixed_3">Fixed<a class="headerlink" href="#fixed_3" title="Permanent link">&para;</a></h3>
+<p><a id='Fixed-5'></a></p>
+<h3 id="fixed_4">Fixed<a class="headerlink" href="#fixed_4" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Empty (filtered) granules could result in <code>Vector{BitVector}</code> columns, which have been changed to <code>Vector{Bool}</code>.</li>
 <li>GEDI search after migration to LPCLOUD.</li>
 </ul>
-<p><a id='Breaking-2'></a></p>
-<h3 id="breaking_1">Breaking<a class="headerlink" href="#breaking_1" title="Permanent link">&para;</a></h3>
+<p><a id='Breaking-3'></a></p>
+<h3 id="breaking_2">Breaking<a class="headerlink" href="#breaking_2" title="Permanent link">&para;</a></h3>
 <ul>
 <li><code>points</code> now return either a <code>Table</code> or a <code>PartitionedTable</code> instead of <code>NamedTuple</code> or <code>Vector{NamedTuple}</code>. The old behaviour can be regained by calling <code>parent</code> on these tables.</li>
 <li>Removed <code>number_of_returns</code> and <code>return_number</code> from ICESat-2 ATL08 canopy output.</li>

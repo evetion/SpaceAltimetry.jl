@@ -1584,6 +1584,17 @@ package if you use it in production.
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#version-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version 3
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1878,7 +1889,7 @@ package if you use it in production.
 <p><a id='L2A-—-Ground-Elevation-and-Canopy-Height'></a></p>
 <p><a id='L2A-—-Ground-Elevation-and-Canopy-Height-1'></a></p>
 <h1 id="l2a-ground-elevation-canopy-height">L2A — Ground Elevation &amp; Canopy Height<a class="headerlink" href="#l2a-ground-elevation-canopy-height" title="Permanent link">&para;</a></h1>
-<p>Version 2 — <a href="https://lpdaac.usgs.gov/documents/998/GEDI02_UserGuide_V21.pdf">User Guide</a> · <a href="https://lpdaac.usgs.gov/documents/581/GEDI_WF_ATBD_v1.0.pdf">ATBD</a></p>
+<p>Version 2 — <a href="https://lpdaac.usgs.gov/documents/998/GEDI02_UserGuide_V21.pdf">User Guide</a> · <a href="https://lpdaac.usgs.gov/documents/581/GEDI_WF_ATBD_v1.0.pdf">ATBD</a> Version 3 — <a href="https://lpdaac.usgs.gov/documents/2442/GEDI02_User_Guide_V3.pdf">User Guide</a> · <a href="https://lpdaac.usgs.gov/documents/2439/gedi_l2a_v3_product_data_dictionary.html">Data dictionary</a></p>
 <p><a id='Overview'></a></p>
 <p><a id='Overview-1'></a></p>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
@@ -1888,7 +1899,7 @@ package if you use it in production.
 <h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">using</span><span class="w"> </span><span class="n">SpaceAltimetry</span><span class="p">,</span><span class="w"> </span><span class="n">DataFrames</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">granule</span><span class="p">(</span><span class="s">&quot;GEDI02_A_2019242104318_O04046_01_T02343_02_003_02_V002.h5&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">granule</span><span class="p">(</span><span class="s">&quot;GEDI02_A_2020257225350_O09946_02_T08506_02_004_02_V003.h5&quot;</span><span class="p">)</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">table</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataFrame</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
 </code></pre></div>
@@ -1946,7 +1957,7 @@ package if you use it in production.
 </tr>
 <tr>
 <td style="text-align: left;"><code>quality</code></td>
-<td style="text-align: left;"><code>quality_flag</code></td>
+<td style="text-align: left;"><code>l2a_quality_flag_rel3</code></td>
 <td style="text-align: left;">Bool</td>
 </tr>
 <tr>
@@ -1981,9 +1992,10 @@ package if you use it in production.
 <p><a id='Canopy-Heights'></a></p>
 <p><a id='Canopy-Heights-1'></a></p>
 <h2 id="canopy-heights">Canopy Heights<a class="headerlink" href="#canopy-heights" title="Permanent link">&para;</a></h2>
-<p>Use <code>gedi_l2a_canopy_variables()</code> to read highest return instead of lowest mode:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">table</span><span class="p">(</span><span class="n">g</span><span class="p">;</span><span class="w"> </span><span class="n">variables</span><span class="o">=</span><span class="n">gedi_l2a_canopy_variables</span><span class="p">())</span>
+<p>Use <code>gedi_l2a_canopy_variables(g)</code> to read highest return instead of lowest mode:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">table</span><span class="p">(</span><span class="n">g</span><span class="p">;</span><span class="w"> </span><span class="n">variables</span><span class="o">=</span><span class="n">gedi_l2a_canopy_variables</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
 </code></pre></div>
+<p>Passing the granule picks the <code>quality</code> flag of its product version; without it the version 3 flag is used.</p>
 <p>This reads <code>elev_highestreturn</code> / <code>lon_highestreturn</code> / <code>lat_highestreturn</code>.</p>
 <p><a id='Quality-Filtering'></a></p>
 <p><a id='Quality-Filtering-1'></a></p>
@@ -1994,6 +2006,43 @@ package if you use it in production.
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="n">collect</span>
 </code></pre></div>
 <p>The <a href="../../../reference/api/#SpaceAltimetry.GEDI.Quality"><code>GEDI.Quality</code></a> filter auto-loads the receive assessment, stale/degrade, amplitude, and selected algorithm fields required by the full <a href="../../../reference/data/#SpaceAltimetry.points-Tuple{ICESat_Granule{:GLAH06}}"><code>points</code></a><code>(g; filtered=true)</code> predicate. The optional <a href="../../../reference/api/#SpaceAltimetry.GEDI.Sensitivity"><code>GEDI.Sensitivity</code></a> filter keeps <code>gt &lt; sensitivity &lt;= 1.0</code>; <code>gt</code> defaults to <code>0.9</code>.</p>
+<p><a id='Version-3'></a></p>
+<p><a id='Version-3-1'></a></p>
+<h2 id="version-3">Version 3<a class="headerlink" href="#version-3" title="Permanent link">&para;</a></h2>
+<p>Version 3 (PGE 004, filenames ending in <code>_V003.h5</code>) is the default since it was released in 2026. It is read with the same schema as version 2, with these differences (GEDI Level 2 User Guide V3.0, section 7.1):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"></th>
+<th style="text-align: left;">version 2</th>
+<th style="text-align: left;">version 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>quality</code> column</td>
+<td style="text-align: left;"><code>quality_flag</code></td>
+<td style="text-align: left;"><code>l2a_quality_flag_rel3</code>: the version 2 conditions plus <code>sensitivity_a2 &gt; 0.95</code> over land (<code>&gt; 0.98</code> in tropical forest) and <code>elev_highestreturn − digital_elevation_model &lt; 150</code> m. The version 2 flag is still in the file as <code>l2a_quality_flag_rel2</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">algorithm setting groups</td>
+<td style="text-align: left;">1–6</td>
+<td style="text-align: left;">1, 2, 5, 10</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="../../../reference/api/#SpaceAltimetry.GEDI.Quality"><code>GEDI.Quality</code></a> algorithm checks</td>
+<td style="text-align: left;"><code>rx_processing_aN/{rx_algrunflag, zcross, toploc}</code> of the selected group</td>
+<td style="text-align: left;"><code>l2_algrunflag</code>, which combines the same checks and adds <code>0 &lt; sensitivity &lt; 1</code></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">gs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">search</span><span class="p">(</span><span class="ss">:GEDI</span><span class="p">,</span><span class="w"> </span><span class="ss">:GEDI02_A</span><span class="p">;</span><span class="w"> </span><span class="n">extent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">extent</span><span class="p">)</span><span class="w">                </span><span class="c"># version 3 (default)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">gs2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">search</span><span class="p">(</span><span class="ss">:GEDI</span><span class="p">,</span><span class="w"> </span><span class="ss">:GEDI02_A</span><span class="p">;</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">extent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">extent</span><span class="p">)</span><span class="w">  </span><span class="c"># version 2</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title"><code>selected_algorithm</code> in version 3</p>
+<p>In version 3 files, <code>selected_algorithm</code> keeps the version 2 <code>valid_range</code> of 1–6, but shots also use group 10. Because nodata masking honours <code>valid_range</code>, those shots read as <code>missing</code> when you add <code>selected_algorithm</code> as a column. <code>GEDI.Quality</code> uses <code>l2_algrunflag</code> instead, so it is not affected.</p>
+</div>
 
 
 
