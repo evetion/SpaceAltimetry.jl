@@ -190,6 +190,9 @@ function parse_cmr_json(r)
     map(granule_info, get(get(data, "feed", Dict()), "entry", []))
 end
 
+# Whether a response has an error status, the rule of `HTTP.iserror`, which HTTP.jl 2 removed.
+iserror(r) = r.status >= 300 && !(r.status in (301, 302, 303, 307, 308))
+
 function parse_cmr_error(r)
     try
         "Something went wrong:\n" * string(get(JSON3.read(r.body), "errors", ""))
@@ -269,7 +272,7 @@ function earthdata_search(;
 
     qurl = umm ? earthdata_url : replace(earthdata_url, "umm_json_v1_6_4" => "json")
     r = HTTP.get(qurl, query = q, verbose = verbose, status_exception = false)
-    HTTP.iserror(r) && error(parse_cmr_error(r))
+    iserror(r) && error(parse_cmr_error(r))
     parsef = umm ? parse_cmr_ummjson : parse_cmr_json
     cgranules = parsef(r)
     granules = Vector{NamedTuple}()
@@ -278,7 +281,7 @@ function earthdata_search(;
         @warn "Found more than $page_size granules, requesting another $page_size..."
         v = get(Dict(r.headers), SubString("CMR-Search-After"), "")
         r = HTTP.get(qurl, query = q, ["CMR-Search-After" => v], verbose = verbose, status_exception = false)
-        HTTP.iserror(r) && error(parse_cmr_error(r))
+        iserror(r) && error(parse_cmr_error(r))
         cgranules = parsef(r)
         append!(granules, cgranules)
     end
