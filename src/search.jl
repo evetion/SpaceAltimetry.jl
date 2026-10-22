@@ -277,9 +277,10 @@ function earthdata_search(;
     cgranules = parsef(r)
     granules = Vector{NamedTuple}()
     append!(granules, cgranules)
-    while !(length(cgranules) < page_size) && haskey(Dict(r.headers), "CMR-Search-After") && all_pages
+    # CMR sends this header in lowercase, so look it up ignoring case
+    while !(length(cgranules) < page_size) && !isempty(HTTP.header(r, "CMR-Search-After")) && all_pages
         @warn "Found more than $page_size granules, requesting another $page_size..."
-        v = get(Dict(r.headers), SubString("CMR-Search-After"), "")
+        v = HTTP.header(r, "CMR-Search-After")
         r = HTTP.get(qurl, query = q, ["CMR-Search-After" => v], verbose = verbose, status_exception = false)
         iserror(r) && error(parse_cmr_error(r))
         cgranules = parsef(r)
